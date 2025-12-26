@@ -1,99 +1,403 @@
-سوالات درس 6 پیام هفتم با جواب
-نوشته : HamGamDars تعداد نظرات : 118
-سوالات درس 6 پیام هفتم با جواب
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>آزمون جامع پیام‌های آسمانی هفتم - درس ۶</title>
+    <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazir-font@v30.1.0/dist/font-face.css" rel="stylesheet" type="text/css" />
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <style>
+        :root {
+            --primary: #1e293b;
+            --secondary: #64748b;
+            --accent: #6366f1;
+            --bg: #f1f5f9;
+            --card: #ffffff;
+            --success: #10b981;
+            --error: #ef4444;
+            --warning: #f59e0b;
+            --border: #e2e8f0;
+        }
 
-سوالات تشریحی پیام هفتم درس ششم
+        * { box-sizing: border-box; font-family: 'Vazir', sans-serif; }
 
-سوالات درس 6 پیام هفتم با جواب
+        body {
+            background-color: var(--bg);
+            color: var(--primary);
+            margin: 0;
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+        }
 
-نام درس : اسوه فداکاری و عدالت | موضوع : سوالات متن | پایه هفتم
+        .container { width: 100%; max-width: 850px; }
 
-سوالات تشریحی پیام هفتم درس ششم
+        .card {
+            background: var(--card);
+            border-radius: 24px;
+            padding: 25px;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05);
+            border: 1px solid var(--border);
+            margin-bottom: 20px;
+        }
 
-سوالات پیام هفتم / درس ششم «اسوه فداکاری و عدالت » / در این بخش سوالات متن درس ششم 6 پیام های آسمانی هفتم را آماده کرده ایم. حتما سوالات درس ششم دینی هفتم در سایت همگام درس را برای دوستان خود به اشتراک بگذارید.
+        header { text-align: center; margin-bottom: 30px; }
+        header h1 { font-size: 1.5rem; margin: 0; color: var(--primary); }
+        header p { color: var(--secondary); margin-top: 8px; font-size: 0.9rem; }
 
-خودت را امتحان کن
+        /* Mode Selection Grid */
+        .mode-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 15px; margin: 25px 0; }
+        .mode-card {
+            border: 2px solid var(--border);
+            padding: 20px;
+            border-radius: 20px;
+            cursor: pointer;
+            text-align: center;
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .mode-card:hover { border-color: var(--accent); background: #f8fafc; transform: translateY(-3px); }
+        .mode-card.active { border-color: var(--accent); background: #f5f3ff; box-shadow: 0 0 0 2px var(--accent); }
+        .mode-card i { font-size: 2.5rem; color: var(--accent); margin-bottom: 12px; }
 
-1 -سه نمونه از فداکاری های حضرت علی علیه السلام را به صورت خلاصه بیان کنید.
-پاسخ: الف)ماجرای از خود گذشتگی حضرت علی علیه السلام در شب هجرت پیامبر اکرم که به- لیلۀُ المبیت – مشهور است.
-ب) وقتی در جنگ احد بسیاری از مؤمنان به شهادت رسیدند و به جز چند نفر ،پیامبر خدا را در میان انبوهی از سپاهیان مشرک رها کردند ،کسی که
-در کنار رسول خدا با شجاعت می جنگید ،علی بود.
-ج) وقتی خداوند آیات مهم سوره توبه را نازل کرد و قرار شد یکی از مؤمنان این آیات را در میان مشرکان بی رحم مکه با صدای بلند بخواند
-،کسی که این مسؤلینت خطرناک را عهده دار شد ، علی بود.
+        /* Question UI */
+        .option-item {
+            border: 2px solid var(--border);
+            border-radius: 14px;
+            padding: 16px;
+            margin-bottom: 12px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 1rem;
+            transition: all 0.2s;
+        }
+        .option-item.selected { border-color: var(--accent); background: #f5f3ff; }
+        .option-item.correct { border-color: var(--success); background: #ecfdf5; color: #064e3b; }
+        .option-item.wrong { border-color: var(--error); background: #fef2f2; color: #7f1d1d; }
 
-2ـ بنا بر سخن امیر مؤمنان علیه السلام ، خداوند از آگاهان چه عهدی گرفته است؟
-پاسخ: حق مظلوم را از ظالم بستانند و به او باز گردانند.
+        textarea { width: 100%; border: 2px solid var(--border); border-radius: 14px; padding: 15px; min-height: 130px; margin-bottom: 15px; font-size: 1rem; outline: none; transition: border-color 0.2s; }
+        textarea:focus { border-color: var(--accent); }
 
-3ـ مرد مسیحی چگونه به حقانیت دین اسلام پی برد و مسلمان شد؟ وقتی مرد مسیحی دید که قاضی بین او و خلیفه مسلمانان فرقی نگذاشت و
-پاسخ: حکمی به زیان خلیفه مسلمین داد حقانیت دین اسلام بر او آشکار شد و شهادتین را بر زبان آورد و مسلمان شد.
+        /* Eval Buttons */
+        .eval-btn-container { display: flex; gap: 12px; margin-top: 15px; }
+        .btn-eval {
+            flex: 1;
+            padding: 12px;
+            border-radius: 12px;
+            border: 2px solid var(--border);
+            cursor: pointer;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            background: white;
+            transition: all 0.2s;
+        }
+        .btn-eval.correct { border-color: var(--success); color: var(--success); }
+        .btn-eval.correct.active { background: var(--success); color: white; }
+        .btn-eval.wrong { border-color: var(--error); color: var(--error); }
+        .btn-eval.wrong.active { background: var(--error); color: white; }
 
-همگام درس ، HamGamDars.com
+        /* Common Buttons */
+        .btn { border: none; padding: 14px 28px; border-radius: 14px; cursor: pointer; font-weight: bold; font-size: 1rem; display: inline-flex; align-items: center; gap: 10px; transition: all 0.2s; }
+        .btn-primary { background: var(--accent); color: white; }
+        .btn-outline { background: transparent; border: 2px solid var(--border); color: var(--secondary); }
+        .btn:disabled { opacity: 0.5; cursor: not-allowed; }
 
-سوالات متن درس هفتم پیام هفتم
+        /* History Cards */
+        .history-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 12px; margin-top: 20px; }
+        .history-card { background: #f8fafc; border: 1px solid var(--border); padding: 15px; border-radius: 16px; display: flex; justify-content: space-between; align-items: center; }
+        .history-info div:first-child { font-weight: bold; font-size: 0.9rem; }
+        .history-info div:last-child { font-size: 0.75rem; color: var(--secondary); }
+        .history-score { background: white; padding: 5px 12px; border-radius: 10px; font-weight: 900; border: 1px solid var(--border); color: var(--accent); }
 
-1 -چرا فرشته وحی دستور داد پیامبر شبانه مکه را ترک نماید؟
-پاسخ: زیرا به وسیله مشرکان کشته می شد و رسالتش ناتمام می ماند.
+        /* Study Area */
+        .study-box { background: #f8fafc; border-right: 4px solid var(--accent); padding: 20px; border-radius: 12px; margin-bottom: 15px; }
+        .study-box h3 { margin-top: 0; color: var(--accent); font-size: 1.1rem; }
 
-2 -وقتی رسول خدا گفت : «علی جان آیا می توانی مرا در اجرای امر الهی هجرت یاری کنی؟» چه پاسخی شنید؟
-پاسخ: در این صورت آیا شما به سلامت خواهید بود؟
+        .feedback-box { background: #fffbeb; border-right: 5px solid var(--warning); padding: 20px; border-radius: 14px; margin-top: 20px; display: none; }
+        .feedback-box.visible { display: block; }
 
-3 -کدام آیه در ستایش فداکاری بی نظیر علی علیه السلام در شب هجرت پیامبر نازل شد؟
-پاسخ: از مردم کسانی هستند که جانشان را برای خشنودی خدا فدا می کنند و خدا نسبت به بندگانش مهربان است.
+        .hidden { display: none; }
+        .navigation { display: flex; justify-content: space-between; margin-top: 25px; }
 
-4 -فداکار به چه کسی گفته می شود؟
-پاسخ: به کسی که برای خدمت به دین و جامعه خود از مال و سلامتی ،خانواده و حتی جان خود می گذرد و آنها را در راه هدف پاک خود فدا می کند.
+        @media (max-width: 600px) {
+            .eval-btn-container { flex-direction: column; }
+            .history-grid { grid-template-columns: 1fr; }
+            .btn { width: 100%; justify-content: center; }
+        }
+    </style>
+</head>
+<body>
 
-5 -یکی از کامل ترین نمونه های فداکاری در راه خدا کدام است؟
-پاسخ: ماجرای از خود گذشتگی حضرت علی علیه السلام در شب هجرت پیامبر اکرم که به لَیلَۀُ المبیت مشهور است.
+<div class="container">
+    <header>
+        <h1>پیام‌های آسمانی هفتم (متوسطه اول)</h1>
+        <p>آزمون هوشمند درس ششم: اسوه فداکاری و عدالت</p>
+    </header>
 
- خرید اینترنت پر سرعت LTE آسیاتک🤩
-خرید اینترنت پر سرعت LTE آسیاتک🤩
-6 -دو مورد از ویژگی های بارز شخصیت امیرالمؤمنین علیه السلام را بیان کنید.
-پاسخ: 1 (فداکاری و از خود گذشتگی او در راه خدا
-2 (عدالت طلبی و مساوات
+    <!-- Main Menu Screen -->
+    <div id="menu-screen" class="card">
+        <h2>بخش‌های موجود</h2>
+        <div style="display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 25px;">
+            <button class="btn btn-primary" onclick="showSection('study')"><i class="ph ph-article"></i> درسنامه آموزشی</button>
+            <button class="btn btn-outline" style="background: #eef2ff; color: #4f46e5; border:none" onclick="showSection('mode-selection')"><i class="ph ph-pencil-line"></i> شروع آزمون جدید</button>
+        </div>
 
-7 -حضرت علی علیه السلام در چه شرایطی از سوی مردم برای اداره حکومت انتخاب شد؟
-پاسخ: در شرایطی که مشکلات بسیاری جامعه اسلامی را فراگرفته بود.
+        <div id="history-section" class="hidden">
+            <h3 style="font-size: 1rem; margin-bottom: 10px;"><i class="ph ph-clock-counter-clockwise"></i> آخرین تلاش‌های شما</h3>
+            <div id="history-list" class="history-grid"></div>
+        </div>
+    </div>
 
-8 -امیر المؤمنین علیه السلام حکومت را برای چه امری پذیرفت؟
-پاسخ: برای ایجاد عدالت بین مردم
+    <!-- Study Screen -->
+    <div id="study-screen" class="card hidden">
+        <h2>درسنامه درس ۶: اسوه فداکاری و عدالت</h2>
+        <div class="study-box">
+            <h3>مفهوم فداکاری</h3>
+            <p>فداکار کسی است که برای خدمت به دین و جامعه، از مال، سلامتی، خانواده و حتی جان خود در راه هدفی پاک می‌گذرد.</p>
+        </div>
+        <div class="study-box">
+            <h3>لیلة المبیت</h3>
+            <p>شبی که حضرت علی (ع) در بستر پیامبر خوابید تا ایشان هجرت کنند. آیه ۲۰۷ بقره (و من الناس من یشری نفسه...) در این باره نازل شد.</p>
+        </div>
+        <div class="study-box">
+            <h3>ویژگی‌های علی (ع)</h3>
+            <p>۱. فداکاری بی نظیر در جنگ احد و ابلاغ آیات سوره توبه. ۲. عدالت‌طلبی و مساوات در تقسیم بیت‌المال و رعایت حق مظلوم.</p>
+        </div>
+        <div class="study-box">
+            <h3>عدالت در حکومت</h3>
+            <p>حضرت علی (ع) حکومت را برای برقراری حق پذیرفت. ایشان حتی در دادگاه با یک فرد مسیحی فرقی با دیگران نداشتند.</p>
+        </div>
+        <button class="btn btn-primary" onclick="showSection('menu')"><i class="ph ph-house"></i> بازگشت به منوی اصلی</button>
+    </div>
 
-9 -حضرت علی علیه السلام در رعایت عدالت و مساوات بین مسلمانان چگونه بود؟
-پاسخ: هیچ کس را بر دیگری برتری نمی داد.
+    <!-- Mode Selection Screen -->
+    <div id="mode-selection-screen" class="card hidden">
+        <h2>نوع آزمون را انتخاب کنید</h2>
+        <p>۱۸ سوال از متن درس به شکل زیر طراحی می‌شوند:</p>
+        <div class="mode-grid">
+            <div class="mode-card" id="mode-choice" onclick="selectMode('choice')">
+                <i class="ph ph-list-numbers"></i>
+                <h3>تماماً تستی</h3>
+                <p>گزینه‌های ۴ موردی</p>
+            </div>
+            <div class="mode-card" id="mode-desc" onclick="selectMode('desc')">
+                <i class="ph ph-text-aa"></i>
+                <h3>تماماً تشریحی</h3>
+                <p>پاسخ نوشتاری آزاد</p>
+            </div>
+            <div class="mode-card" id="mode-mixed" onclick="selectMode('mixed')">
+                <i class="ph ph-magic-wand"></i>
+                <h3>ترکیبی</h3>
+                <p>تستی و تشریحی</p>
+            </div>
+        </div>
+        <div class="navigation">
+            <button class="btn btn-outline" onclick="showSection('menu')">انصراف</button>
+            <button class="btn btn-primary" id="start-btn" onclick="startQuiz()" disabled>شروع آزمون</button>
+        </div>
+    </div>
 
-10 -حضرت علی علیه السلام پس از تقسیم بیت المال ،چه می کرد؟
-پاسخ: در همان محل به نماز شکر می ایستاد.
+    <!-- Quiz Screen -->
+    <div id="quiz-screen" class="hidden">
+        <div id="quiz-progress" style="margin-bottom: 12px; font-weight: bold; color: var(--secondary); font-size: 0.9rem;"></div>
+        <div class="card" id="question-card"></div>
+        <div class="navigation">
+            <button class="btn btn-outline" id="prev-btn" onclick="navQuestion(-1)">قبلی</button>
+            <button class="btn btn-primary" id="next-btn" onclick="navQuestion(1)">بعدی</button>
+        </div>
+    </div>
 
-11 -دلیل رسیدگی دقیق بیت المال از سوی امیرالمؤمنین چه بود ، خود در این باره چه می فرماید؟
-پاسخ: « تا از حساب سخت روز قیامت و عذاب دردناک آن در امان باشم.»
+    <!-- Result Screen -->
+    <div id="result-screen" class="card hidden" style="text-align: center;">
+        <div id="lottie-placeholder" style="font-size: 4rem;">🎉</div>
+        <h2>آزمون به پایان رسید</h2>
+        <div id="score-circle" style="font-size: 3rem; font-weight: 900; color: var(--accent); margin: 20px 0;"></div>
+        <p id="result-msg" style="margin-bottom: 25px; line-height: 1.6;"></p>
+        <button class="btn btn-primary" onclick="showSection('menu')">بازگشت به منوی اصلی</button>
+    </div>
+</div>
 
-همگام درس ، HamGamDars.com
+<script>
+    // Comprehensive Data from User Text (18 items, each with choice and desc version)
+    const masterData = [
+        { q: 'سه نمونه از فداکاری‌های حضرت علی (ع) را نام ببرید.', a: 'لیلة المبیت، جنگ احد، ابلاغ سوره توبه.', opts: ['لیلة المبیت، جنگ احد، ابلاغ سوره توبه', 'فتح مکه، جنگ خندق، غدیر خم', 'جنگ جمل، صفین، نهروان', 'هجرت به حبشه، صلح حدیبیه'], c: 0 },
+        { q: 'خداوند از آگاهان چه عهدی گرفته است؟', a: 'حق مظلوم را از ظالم بستانند و به او بازگردانند.', opts: ['نماز بخوانند و روزه بگیرند', 'حق مظلوم را از ظالم بستانند', 'به مستمندان کمک کنند', 'در جنگ‌ها شرکت کنند'], c: 1 },
+        { q: 'چرا مرد مسیحی مسلمان شد؟', a: 'چون دید قاضی خلیفه را با او یکسان دید و علیه خلیفه حکم داد.', opts: ['چون علی (ع) به او پول داد', 'چون در جنگ شکست خورد', 'چون عدالت قاضی و خلیفه را دید', 'چون پیامبر را دید'], c: 2 },
+        { q: 'چرا فرشته وحی دستور داد پیامبر شبانه مکه را ترک نماید؟', a: 'زیرا مشرکان قصد داشتند ایشان را به قتل برسانند.', opts: ['برای زیارت کعبه', 'چون مشرکان قصد قتل ایشان را داشتند', 'برای تجارت', 'برای دیدن انصار'], c: 1 },
+        { q: 'پاسخ علی (ع) به پیشنهاد پیامبر برای خوابیدن در بستر ایشان چه بود؟', a: 'آیا در این صورت شما به سلامت خواهید بود؟', opts: ['من می‌ترسم', 'آیا شما به سلامت خواهید بود؟', 'قبول نمی‌کنم', 'شرط می‌گذارم'], c: 1 },
+        { q: 'کدام آیه در ستایش علی (ع) در شب هجرت نازل شد؟', a: 'و من الناس من یشری نفسه ابتغاء مرضات الله', opts: ['آیه تطهیر', 'آیه شراء (سوره بقره)', 'آیه انذار', 'آیه مباهله'], c: 1 },
+        { q: 'فداکار به چه کسی گفته می‌شود؟', a: 'کسی که برای دین و جامعه از مال و جان خود می‌گذرد.', opts: ['کسی که فقط پول می‌دهد', 'کسی که از مال و جان در راه هدف پاک می‌گذرد', 'کسی که فقط خوب حرف می‌زند', 'کسی که در خانه می‌ماند'], c: 1 },
+        { q: 'کامل‌ترین نمونه فداکاری علی (ع) در صدر اسلام کدام است؟', a: 'ماجرای لیلة المبیت.', opts: ['فتح قلعه خیبر', 'ماجرای لیلة المبیت', 'جنگ بدر', 'بیعت غدیر'], c: 1 },
+        { q: 'دو ویژگی بارز شخصیت امیرالمومنین کدام است؟', a: 'فداکاری و عدالت طلبی.', opts: ['ثروت و قدرت', 'فداکاری و عدالت طلبی', 'تجارت و سفر', 'خطابه و شعر'], c: 1 },
+        { q: 'علی (ع) در چه شرایطی حکومت را پذیرفت؟', a: 'در شرایطی که مشکلات بسیاری جامعه اسلامی را فراگرفته بود.', opts: ['در آرامش کامل', 'هنگام ثروت زیاد', 'هنگام مشکلات زیاد جامعه', 'با اجبار مشرکان'], c: 2 },
+        { q: 'هدف اصلی علی (ع) از پذیرش حکومت چه بود؟', a: 'برای ایجاد عدالت بین مردم.', opts: ['کسب مقام', 'انتقام', 'ایجاد عدالت بین مردم', 'تقسیم پست‌ها بین فامیل'], c: 2 },
+        { q: 'رفتار علی (ع) در رعایت عدالت و مساوات چگونه بود؟', a: 'هیچ کس را بر دیگری برتری نمی‌داد.', opts: ['دوستان را برتری می‌داد', 'هیچ کس را بر دیگری برتری نمی‌داد', 'ثروتمندان را مقدم می‌داشت', 'فقط به اعراب توجه داشت'], c: 1 },
+        { q: 'علی (ع) پس از تقسیم بیت المال چه می‌کرد؟', a: 'در همان محل به نماز شکر می‌ایستاد.', opts: ['به استراحت می‌رفت', 'به نماز شکر می‌ایستاد', 'با مردم دعوا می‌کرد', 'لیست را پاره می‌کرد'], c: 1 },
+        { q: 'دلیل رسیدگی دقیق به بیت المال از نظر ایشان چه بود؟', a: 'در امان ماندن از حساب سخت قیامت.', opts: ['ترس از مردم', 'در امان ماندن از حساب قیامت', 'نمایش به دیگران', 'قانون کشوری'], c: 1 },
+        { q: 'قاضی باید با طرفین دعوا چگونه برخورد کند؟', a: 'یکسان و با احترام برابر.', opts: ['به نفع خلیفه', 'به نفع ثروتمند', 'یکسان و با احترام برابر', 'بر اساس ظاهر'], c: 2 },
+        { q: 'شهادتین شامل چه جملاتی است؟', a: 'اشهد ان لا اله الا الله و اشهد ان محمداً رسول الله.', opts: ['فقط سبحان الله', 'شهادت به یگانگی خدا و رسالت پیامبر', 'فقط الله اکبر', 'دعای فرج'], c: 1 },
+        { q: 'ماجرای لیلة المبیت مربوط به کدام واقعه است؟', a: 'هجرت پیامبر از مکه به مدینه.', opts: ['فتح مکه', 'هجرت به مدینه', 'جنگ تبوک', 'حجة الوداع'], c: 1 },
+        { q: 'کدام سوره قرار شد توسط علی (ع) در مکه خوانده شود؟', a: 'آیات ابتدایی سوره توبه.', opts: ['سوره بقره', 'سوره توبه', 'سوره یس', 'سوره نصر'], c: 1 }
+    ];
 
- اگر سوالات بالا را دوست نداشتید : 
+    let currentMode = '';
+    let quizQuestions = [];
+    let currentIdx = 0;
+    let states = [];
 
-1 .به چه کسی فداکار گفته می شود؟
-پاسخ:> فداکار کسی است که برای خدمت به دین و جامعه خود، از مال، سلامتی، خانواده و حتی از جان خود می گذرد و آن ها را در راه هدف پاک و بزرگ خود فدا می کند.
+    function showSection(id) {
+        document.querySelectorAll('.container > div').forEach(d => d.classList.add('hidden'));
+        document.getElementById(`${id}-screen`).classList.remove('hidden');
+        if (id === 'menu') renderHistory();
+    }
 
-2 .ماجرای از خود گذشتگی حضرت علی علیه السلام در شب هجرت پیامبر اکرم به لیله المیت مشهور است.
+    function selectMode(m) {
+        currentMode = m;
+        document.querySelectorAll('.mode-card').forEach(c => c.classList.remove('active'));
+        document.getElementById(`mode-${m}`).classList.add('active');
+        document.getElementById('start-btn').disabled = false;
+    }
 
-3 .دو ویژگی بارز شخصیت حضرت علی (ع) را نام ببرید؟
-پاسخ:> عدالت طلبی و مساوات – فداکاری و خود گذشتگی
+    function startQuiz() {
+        quizQuestions = masterData.map(d => {
+            let type = currentMode;
+            if (currentMode === 'mixed') type = Math.random() > 0.5 ? 'choice' : 'desc';
+            return { ...d, type };
+        });
 
-4 .چرا حضرت علی حکومت را پذیرفت ؟
-پاسخ:> به امید حمایت از مظلومان- ایجاد عدالت میان مردم.
+        states = quizQuestions.map(() => ({ ans: null, text: '', revealed: false, isCorrect: null }));
+        currentIdx = 0;
+        showSection('quiz');
+        renderQuestion();
+    }
 
-5 .حضرت علی برای رعایت عدالت و مساوات چگونه عمل می کردند؟
-پاسخ:> او بین مسلمانان هیچ کس را بر دیگری برتری نمی داد. در حقوق عمومی و مسائل اجتماعی ، با خانواده و نزدیکان خود نیز مانند سایر مسلمانان رفتار می کرد و در هنگام تقسیم بیت المال همه چیز را به دقت و به صورت مساوی میان تمامی مسلمانان تقسیم می کرد.
+    function renderQuestion() {
+        const q = quizQuestions[currentIdx];
+        const s = states[currentIdx];
+        const card = document.getElementById('question-card');
+        document.getElementById('quiz-progress').innerText = `سوال ${currentIdx + 1} از ${quizQuestions.length}`;
 
-6 .از نظر حضرت علی (ع) قاضی باید چگونه باشد؟
-پاسخ:> قاضی باید با هر دو طرف دعوا برخورد یکسانی داشته باشد حتی در نگاه کردن و احترام گذاشتن
+        let html = `<p style="font-size:1.15rem; font-weight:bold; margin-bottom:20px">${q.q}</p>`;
 
-7 .شهادتین چیست؟
-پاسخ:> گفتن »اشهد ان لا اله الا الله و أَشْهَدُ أَنَّ مُحَمَّداً رَسوُلُ الله
+        if (q.type === 'choice') {
+            q.opts.forEach((o, i) => {
+                let cls = 'option-item';
+                if (s.ans === i) cls += ' selected';
+                if (s.revealed) {
+                    if (i === q.c) cls += ' correct';
+                    else if (s.ans === i) cls += ' wrong';
+                }
+                html += `<div class="${cls}" onclick="handleChoice(${i})">${o}</div>`;
+            });
+            html += `<button class="btn btn-outline" style="margin-top:10px" onclick="revealAns()">مشاهده پاسخ صحیح</button>`;
+        } else {
+            html += `<textarea placeholder="پاسخ خود را اینجا تایپ کنید..." oninput="states[currentIdx].text=this.value">${s.text}</textarea>`;
+            html += `<button class="btn btn-outline" onclick="revealAns()">مشاهده پاسخ و خودارزیابی</button>`;
+        }
 
-همگام درس ، HamGamDars.com
+        html += `
+            <div class="feedback-box ${s.revealed ? 'visible' : ''}">
+                <p><strong>پاسخ صحیح:</strong><br>${q.type === 'choice' ? q.opts[q.c] : q.a}</p>
+                ${q.type === 'desc' ? `
+                    <p style="margin-top:15px; font-weight:bold; font-size:0.9rem">آیا پاسخ شما به متن بالا نزدیک بود؟</p>
+                    <div class="eval-btn-container">
+                        <button class="btn-eval correct ${s.isCorrect === true ? 'active' : ''}" onclick="setEval(true)">بله، درست بود <i class="ph ph-check"></i></button>
+                        <button class="btn-eval wrong ${s.isCorrect === false ? 'active' : ''}" onclick="setEval(false)">خیر، اشتباه بود <i class="ph ph-x"></i></button>
+                    </div>
+                ` : ''}
+            </div>
+        `;
+        card.innerHTML = html;
+        updateNav();
+    }
 
-⏹ پیشنهاد میشود جهت مشاهده دیگر مطالب مربوط به کتاب پیام های آسمانی هفتم از لینک های روبرو استفاده نمایید: 1- سوالات درس 7 پیام هفتم ؛ 2- سوالات متن پیام هفتم ، 3- نمونه سوالات درس به درس پیام هفتم ، 4- گام به گام پیام هفتم 
+    function handleChoice(i) {
+        if (states[currentIdx].revealed) return;
+        states[currentIdx].ans = i;
+        states[currentIdx].isCorrect = (i === quizQuestions[currentIdx].c);
+        renderQuestion();
+    }
 
- تا 10 گرم طلا در گردونه میلی!
-تا 10 گرم طلا در گردونه میلی!
+    function revealAns() {
+        states[currentIdx].revealed = true;
+        renderQuestion();
+    }
+
+    function setEval(v) {
+        states[currentIdx].isCorrect = v;
+        renderQuestion();
+    }
+
+    function navQuestion(dir) {
+        if (dir === 1 && currentIdx === quizQuestions.length - 1) {
+            finish();
+            return;
+        }
+        currentIdx += dir;
+        renderQuestion();
+    }
+
+    function updateNav() {
+        document.getElementById('prev-btn').disabled = currentIdx === 0;
+        document.getElementById('next-btn').innerHTML = currentIdx === quizQuestions.length - 1 ? 'پایان آزمون <i class="ph ph-check-fat"></i>' : 'بعدی <i class="ph ph-arrow-left"></i>';
+    }
+
+    function finish() {
+        showSection('result');
+        const score = states.filter(s => s.isCorrect === true).length;
+        document.getElementById('score-circle').innerText = `${score} از ${quizQuestions.length}`;
+        
+        const ratio = score / quizQuestions.length;
+        let msg = "";
+        if(ratio >= 0.9) msg = "فوق العاده! شما یک اسوه واقعی در یادگیری هستید.";
+        else if(ratio >= 0.7) msg = "بسیار خوب! تسلط بالایی دارید.";
+        else if(ratio >= 0.5) msg = "خوب است، اما برای نمره عالی نیاز به مرور درسنامه دارید.";
+        else msg = "پیشنهاد می‌شود ابتدا درسنامه را دقیق مطالعه کرده و دوباره آزمون دهید.";
+        
+        document.getElementById('result-msg').innerText = msg;
+        save(score, quizQuestions.length);
+    }
+
+    function save(s, t) {
+        const history = JSON.parse(localStorage.getItem('payam7_d6_logs') || '[]');
+        const mNames = { choice: 'تستی', desc: 'تشریحی', mixed: 'ترکیبی' };
+        history.push({
+            date: new Date().toLocaleDateString('fa-IR'),
+            mode: mNames[currentMode],
+            score: `${s}/${t}`,
+            timestamp: Date.now()
+        });
+        localStorage.setItem('payam7_d6_logs', JSON.stringify(history.slice(-6)));
+    }
+
+    function renderHistory() {
+        const logs = JSON.parse(localStorage.getItem('payam7_d6_logs') || '[]');
+        const section = document.getElementById('history-section');
+        const list = document.getElementById('history-list');
+        
+        if (logs.length > 0) {
+            section.classList.remove('hidden');
+            list.innerHTML = logs.reverse().map(l => `
+                <div class="history-card">
+                    <div class="history-info">
+                        <div>آزمون ${l.mode}</div>
+                        <div>${l.date}</div>
+                    </div>
+                    <div class="history-score">${l.score}</div>
+                </div>
+            `).join('');
+        }
+    }
+
+    window.onload = renderHistory;
+</script>
+
+</body>
+</html>
+
