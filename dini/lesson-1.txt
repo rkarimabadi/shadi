@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>آزمون جامع درس ۱ پیام‌های آسمانی هفتم</title>
+    <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazir-font@v30.1.0/dist/font-face.css" rel="stylesheet" type="text/css" />
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <style>
+        :root {
+            --primary: #0f172a;
+            --secondary: #475569;
+            --accent: #0d9488;
+            --bg: #f0fdfa;
+            --card: #ffffff;
+            --success: #059669;
+            --error: #dc2626;
+            --warning: #d97706;
+            --border: #ccfbf1;
+        }
+
+        * { box-sizing: border-box; font-family: 'Vazir', sans-serif; }
+
+        body {
+            background-color: var(--bg);
+            color: var(--primary);
+            margin: 0;
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .container { width: 100%; max-width: 850px; }
+
+        .card {
+            background: var(--card);
+            border-radius: 24px;
+            padding: 25px;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05);
+            border: 1px solid var(--border);
+            margin-bottom: 20px;
+            animation: fadeIn 0.4s ease-out;
+        }
+
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        header { text-align: center; margin-bottom: 30px; border-bottom: 2px solid var(--border); padding-bottom: 15px; }
+        header h1 { font-size: 1.6rem; margin: 0; color: var(--accent); }
+        header p { color: var(--secondary); margin-top: 8px; font-weight: bold; }
+
+        .btn { border: none; padding: 12px 24px; border-radius: 14px; cursor: pointer; font-weight: bold; display: inline-flex; align-items: center; gap: 8px; transition: all 0.2s; font-size: 1rem; }
+        .btn-primary { background: var(--accent); color: white; }
+        .btn-outline { background: white; border: 2px solid var(--border); color: var(--secondary); }
+        .btn:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(13, 148, 136, 0.2); }
+
+        .mode-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin: 25px 0; }
+        .mode-card {
+            border: 2px solid var(--border);
+            padding: 20px;
+            border-radius: 20px;
+            cursor: pointer;
+            text-align: center;
+            transition: 0.3s;
+        }
+        .mode-card:hover { border-color: var(--accent); background: #f0fdfa; }
+        .mode-card.active { border-color: var(--accent); background: #ccfbf1; box-shadow: 0 0 0 2px var(--accent); }
+        .mode-card i { font-size: 2.5rem; color: var(--accent); margin-bottom: 10px; }
+
+        .option-item {
+            border: 2px solid var(--border);
+            border-radius: 14px;
+            padding: 15px;
+            margin-bottom: 10px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            transition: 0.2s;
+        }
+        .option-item:hover { border-color: var(--accent); }
+        .option-item.selected { border-color: var(--accent); background: #f0fdfa; }
+        .option-item.correct { border-color: var(--success); background: #ecfdf5; color: var(--success); font-weight: bold; }
+        .option-item.wrong { border-color: var(--error); background: #fef2f2; color: var(--error); }
+
+        textarea { width: 100%; border: 2px solid var(--border); border-radius: 14px; padding: 15px; min-height: 120px; margin-bottom: 10px; font-size: 1rem; outline: none; }
+        textarea:focus { border-color: var(--accent); }
+
+        .feedback-box { background: #fffbeb; border-right: 5px solid var(--warning); padding: 15px; border-radius: 14px; margin-top: 15px; display: none; }
+        .feedback-box.visible { display: block; }
+
+        .history-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 10px; margin-top: 20px; }
+        .history-card { background: #f1f5f9; padding: 15px; border-radius: 16px; display: flex; justify-content: space-between; align-items: center; border: 1px solid var(--border); }
+        
+        .study-section { line-height: 1.8; color: #334155; }
+        .study-point { background: #f8fafc; border-right: 4px solid var(--accent); padding: 12px; margin-bottom: 10px; border-radius: 8px; font-size: 0.95rem; }
+        .study-point strong { color: var(--accent); }
+
+        .hidden { display: none; }
+        .navigation { display: flex; justify-content: space-between; margin-top: 20px; gap: 10px; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>پیام‌های آسمانی هفتم</h1>
+        <p>درس ۱: بینای مهربان (آزمون جامع ۳۱ سوالی)</p>
+    </header>
+
+    <!-- Menu Screen -->
+    <div id="menu-screen" class="card">
+        <h2>منوی اصلی سامانه</h2>
+        <div style="display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 30px;">
+            <button class="btn btn-outline" style="border-color:var(--accent); color:var(--accent)" onclick="showSection('study')"><i class="ph ph-book-open"></i> مطالعه درسنامه جامع درس ۱</button>
+            <button class="btn btn-primary" onclick="showSection('mode-selection')"><i class="ph ph-pencil-line"></i> شروع آزمون ۳۱ سوالی</button>
+        </div>
+
+        <div id="history-section" class="hidden">
+            <h3 style="font-size: 1.1rem; border-bottom: 2px solid var(--bg); padding-bottom: 10px;"><i class="ph ph-clock-counter-clockwise"></i> سوابق آزمون‌های درس ۱</h3>
+            <div id="history-list" class="history-grid"></div>
+        </div>
+    </div>
+
+    <!-- Study Screen -->
+    <div id="study-screen" class="card hidden">
+        <h2><i class="ph ph-book-open"></i> درسنامه جامع درس ۱: بینای مهربان</h2>
+        <div class="study-section">
+            <div class="study-point"><strong>نظارت دائمی خداوند:</strong> طبق آیه «وَ هُوَ مَعَکُمْ أَیْنَ ما کُنْتُمْ» (و او هر جا که باشید، با شماست)، خداوند همیشه و همه جا ناظر اعمال ماست و هیچ چیز حتی فکرهای پنهان ما از او مخفی نمی‌ماند.</div>
+            <div class="study-point"><strong>نعمت اختیار و یادگیری:</strong> خداوند ما را با عقل و اختیار آفریده تا بتوانیم کارهای خوب را یاد بگیریم و از کارهای بد دوری کنیم. اختیار برای انتخاب مسیر رشد و تعالی ماست.</div>
+            <div class="study-point"><strong>شکر نعمت (دو نوع):</strong> 
+                <br>۱. <strong>شکر زبانی:</strong> گفتن «الحمدلله» و ستایش زبانی خدا.
+                <br>۲. <strong>شکر عملی:</strong> استفاده درست از نعمت‌ها در راهی که خدا راضی است (مثلاً استفاده از چشم برای مطالعه مفید یا استفاده از دست برای کمک به سالخوردگان).</div>
+            <div class="study-point"><strong>رابطه شکر و افزایش نعمت:</strong> آیه «لَئِنْ شَکَرْتُمْ لَأَزیدَنَّکُمْ» صراحتاً بیان می‌کند که «اگر شکرگزاری کنید، نعمت‌های شما را زیاد می‌کنم». شکر نکردن یا استفاده نادرست می‌تواند باعث کاهش نعمت شود.</div>
+            <div class="study-point"><strong>علت حوادث:</strong> با وجود مراقبت خدا، حوادث به دلیل «اختیار انسان و انتخاب‌های اشتباه» یا به عنوان «آزمایش الهی» رخ می‌دهند تا انسان رشد کند.</div>
+            <div class="study-point"><strong>نعمت‌های چهارگانه:</strong> چشم، گوش، دست، پا و عقل نمونه‌هایی از نعمت‌های خدا هستند که باید از آن‌ها برای کارهای خیر و کمک به ناتوانان استفاده کرد.</div>
+        </div>
+        <button class="btn btn-primary" style="margin-top:20px" onclick="showSection('menu')">بازگشت به منوی اصلی</button>
+    </div>
+
+    <!-- Mode Selection Screen -->
+    <div id="mode-selection-screen" class="card hidden">
+        <h2>تنظیمات آزمون درس ۱</h2>
+        <p>نوع آزمون خود را انتخاب کنید:</p>
+        <div class="mode-grid">
+            <div class="mode-card" id="mode-choice" onclick="selectMode('choice')">
+                <i class="ph ph-list-numbers"></i>
+                <h3>تستی</h3>
+                <p>گزینه‌ای</p>
+            </div>
+            <div class="mode-card" id="mode-desc" onclick="selectMode('desc')">
+                <i class="ph ph-note-pencil"></i>
+                <h3>تشریحی</h3>
+                <p>نوشتاری</p>
+            </div>
+            <div class="mode-card" id="mode-mixed" onclick="selectMode('mixed')">
+                <i class="ph ph-shuffle"></i>
+                <h3>ترکیبی</h3>
+                <p>هوشمند</p>
+            </div>
+        </div>
+        <div class="navigation">
+            <button class="btn btn-outline" onclick="showSection('menu')">انصراف</button>
+            <button class="btn btn-primary" id="start-btn" onclick="startQuiz()" disabled>شروع آزمون</button>
+        </div>
+    </div>
+
+    <!-- Quiz Screen -->
+    <div id="quiz-screen" class="hidden">
+        <div id="progress" style="margin-bottom: 10px; font-weight: bold; color: var(--accent);"></div>
+        <div class="card" id="question-card"></div>
+        <div class="navigation">
+            <button class="btn btn-outline" id="prev-btn" onclick="nav(-1)">سوال قبلی</button>
+            <button class="btn btn-primary" id="next-btn" onclick="nav(1)">سوال بعدی</button>
+        </div>
+    </div>
+
+    <!-- Result Screen -->
+    <div id="result-screen" class="card hidden" style="text-align: center;">
+        <i class="ph ph-star" style="font-size: 4rem; color: var(--warning);"></i>
+        <h2>نتیجه آزمون بینای مهربان</h2>
+        <div id="final-score" style="font-size: 3.5rem; font-weight: 900; color: var(--accent); margin: 15px 0;"></div>
+        <p id="result-text" style="margin-bottom: 25px;"></p>
+        <button class="btn btn-primary" onclick="showSection('menu')">بازگشت به پیشخوان</button>
+    </div>
+</div>
+
+<script>
+    const questionBank = [
+        { q: "ترجمه و مفهوم آیه «وَ هُوَ مَعَکُمْ أَیْنَ ما کُنْتُمْ» چیست؟", a: "ترجمه: و او هر جا که باشید، با شماست. مفهوم: خداوند همیشه و همه جا با ما و همراه ما و ناظر اعمال ماست.", opts: ["خداوند دانا است", "خداوند همیشه با ماست و ناظر اعمال", "خداوند خالق است", "خداوند بخشنده است"], c: 1 },
+        { q: "خداوند ما را چگونه آفریده است؟", a: "به گونه‌ای که می‌توانیم به مرور، کارهای خوب را یاد بگیریم و انجام دهیم و کارهای بد را شناخته و از آنها دوری کنیم.", opts: ["کامل و بدون نقص", "به گونه‌ای که کارهای خوب را یاد بگیریم و بد را دوری کنیم", "با قدرت زیاد", "با زیبایی"], c: 1 },
+        { q: "از نعمت‌هایی که خداوند به ما داده است، چهار مورد نام ببرید.", a: "چشم، گوش، دست، پا (یا هر نعمت دیگری مانند عقل، سلامت، خانواده و غیره).", opts: ["ثروت، قدرت، زیبایی، دانش", "چشم، گوش، دست، عقل", "خانه، ماشین، پول، غذا", "کتاب، مدرسه، معلم، دوستان"], c: 1 },
+        { q: "شکر عملی نعمت‌های خدا یعنی چه؟", a: "استفاده درست از نعمت‌ها در راهی که خدا راضی است و پرهیز از استفاده نادرست از آنها.", opts: ["گفتن الحمدلله", "استفاده درست از نعمت‌ها در راه رضایت خدا", "صدقه دادن", "نماز خواندن"], c: 1 },
+        { q: "سه مورد از شکر عملی نعمت‌های خدا را بیان کنید.", a: "۱. استفاده از چشم برای مطالعه کتاب‌های مفید ۲. کمک به افراد سالخورده و ناتوان ۳. استفاده از دست برای کارهای خیر.", opts: ["نماز، روزه، حج", "مطالعه مفید، کمک به دیگران، کارهای خیر", "خوردن غذا، خوابیدن، بازی", "دیدن تلویزیون، بازی کامپیوتری، خواب"], c: 1 },
+        { q: "ترجمه آیه «لَئِنْ شَکَرْتُمْ لَأَزیدَنَّکُمْ» و مفهوم آن چیست؟", a: "ترجمه: اگر شکرگزاری کنید، نعمت‌های شما را زیاد می‌کنم. مفهوم: با شکر نعمت‌ها، خداوند نعمت‌های بیشتری عطا می‌کند.", opts: ["اگر نماز بخوانید پاداش می‌دهم", "اگر شکر کنید نعمت زیاد می‌کنم", "اگر گناه کنید عذاب می‌کنم", "اگر کمک کنید موفق می‌شوید"], c: 1 },
+        { q: "چرا با وجود مراقبت‌های خداوند، انسان‌ها دچار حادثه می‌شوند؟", a: "به دلیل اختیار انسان و انتخاب‌های اشتباه او، یا برای آزمایش و رشد.", opts: ["چون خدا فراموش کرده", "به دلیل اختیار و انتخاب انسان", "چون خدا نمی‌خواهد", "تصادفی است"], c: 1 },
+        { q: "نام درس اول کتاب پیام‌های آسمانی هفتم چیست؟", a: "بینای مهربان.", opts: ["شناخت نامه اعمال", "بینای مهربان", "استعانت از خدا", "پیامبر رحمت"], c: 1 },
+        { q: "خداوند چه کسی است که همه جا با ماست؟", a: "بینای مهربان و ناظر بر اعمال.", opts: ["دور و غایب", "بینای مهربان و ناظر", "فقط در آسمان", "فقط در مسجد"], c: 1 },
+        { q: "شکر زبانی نعمت‌ها چگونه است؟", a: "گفتن الحمدلله و ستایش خدا.", opts: ["استفاده از نعمت‌ها", "گفتن الحمدلله", "کمک به دیگران", "مطالعه"], c: 1 },
+        { q: "چرا باید از نعمت‌های خدا در راه حرام استفاده نکنیم؟", a: "این شکر عملی است و رضایت خدا را جلب می‌کند.", opts: ["چون کم می‌شود", "برای شکر عملی و رضایت خدا", "چون دیگران ناراحت می‌شوند", "چون قانون است"], c: 1 },
+        { q: "یکی از نعمت‌های بزرگ خدا چیست؟", a: "عقل و اختیار برای انتخاب خوب و بد.", opts: ["ثروت", "عقل و اختیار", "زیبایی", "قدرت"], c: 1 },
+        { q: "مفهوم همراهی خدا با ما چیست؟", a: "خداوند ناظر بر اعمال ماست و هیچ چیز از او پنهان نیست.", opts: ["خدا با ما راه می‌رود", "ناظر بر اعمال و هیچ چیز پنهان نیست", "خدا کمک فیزیکی می‌کند", "خدا فقط در سختی‌ها همراه است"], c: 1 },
+        { q: "اگر شکر نعمت کنیم چه می‌شود؟", a: "خدا نعمت‌ها را زیاد می‌کند.", opts: ["نعمت کم می‌شود", "نعمت زیاد می‌شود", "هیچ تغییری نمی‌کند", "عذاب می‌شویم"], c: 1 },
+        { q: "شکر عملی چشم چیست؟", a: "استفاده از آن برای دیدن چیزهای مفید و دوری از حرام.", opts: ["بستن چشم", "دیدن مفید و دوری از حرام", "دیدن تلویزیون", "خوابیدن"], c: 1 },
+        { q: "خداوند چرا ما را با اختیار آفریده؟", a: "تا بتوانیم خوب را انتخاب کنیم و رشد کنیم.", opts: ["برای عذاب", "برای انتخاب خوب و رشد", "برای بازی", "بدون دلیل"], c: 1 },
+        { q: "نعمت دست را چگونه شکر عملی کنیم؟", a: "با کمک به دیگران و کارهای خیر.", opts: ["با تنبلی", "با کارهای خیر و کمک", "با خوابیدن", "با بازی"], c: 1 },
+        { q: "آیه مربوط به افزایش نعمت با شکر کدام است؟", a: "لَئِنْ شَکَرْتُمْ لَأَزیدَنَّکُمْ.", opts: ["وَ هُوَ مَعَکُمْ", "لَئِنْ شَکَرْتُمْ لَأَزیدَنَّکُمْ", "ان الله علیم خبیر", "بسم الله"], c: 1 },
+        { q: "چرا حوادث رخ می‌دهد با وجود مراقبت خدا؟", a: "به خاطر انتخاب‌های خودمان یا آزمایش.", opts: ["خدا نمی‌بیند", "به خاطر انتخاب‌ها یا آزمایش", "تصادفی", "خدا نمی‌خواهد"], c: 1 },
+        { q: "شکر نعمت‌ها چند نوع است؟", a: "زبانی و عملی.", opts: ["فقط زبانی", "زبانی و عملی", "فقط عملی", "سه نوع"], c: 1 },
+        { q: "مثالی از شکر عملی نعمت پا بزنید.", a: "رفتن به مسجد یا کمک به دیگران.", opts: ["نشستن", "رفتن به مسجد یا کمک", "دویدن بیهوده", "خوابیدن"], c: 1 },
+        { q: "خداوند مهربان است یا فقط بینا؟", a: "بینای مهربان.", opts: ["فقط بینا", "بینای مهربان", "فقط مهربان", "هیچ کدام"], c: 1 },
+        { q: "نعمت عقل را چگونه شکر کنیم؟", a: "با فکر کردن به کارهای خوب و تصمیم درست.", opts: ["با تنبلی", "با تصمیم درست و کارهای خوب", "با فراموشی", "با گناه"], c: 1 },
+        { q: "اگر از نعمت‌ها نادرست استفاده کنیم چه می‌شود؟", a: "ممکن است نعمت کم شود یا عذاب شود.", opts: ["نعمت زیاد می‌شود", "ممکن است نعمت کم یا عذاب شود", "هیچ اتفاقی نمی‌افتد", "پاداش می‌گیریم"], c: 1 },
+        { q: "خداوند همه اعمال ما را می‌بیند حتی اگر ...", a: "پنهان فکر کنیم.", opts: ["در روز", "پنهان باشد", "در شب", "در خانه"], c: 1 },
+        { q: "یکی از راه‌های شکر عملی کمک به چه کسانی است؟", a: "سالخورده و ناتوان.", opts: ["ثروتمندان", "سالخورده و ناتوان", "دشمنان", "خودمان فقط"], c: 1 },
+        { q: "مفهوم آیه همراهی خدا چیست؟", a: "نظارت دائمی بر اعمال.", opts: ["کمک فیزیکی", "نظارت دائمی بر اعمال", "دوری از ما", "فقط در نماز"], c: 1 },
+        { q: "چرا خدا نعمت‌ها را با شکر زیاد می‌کند؟", a: "برای تشویق به شکر بیشتر.", opts: ["برای تنبیه", "برای تشویق به شکر", "بدون دلیل", "برای کاهش"], c: 1 },
+        { q: "شکر عملی یعنی استفاده از نعمت‌ها در راه ...", a: "رضایت خدا.", opts: ["گناه", "رضایت خدا", "خودخواهی", "تنبلی"], c: 1 },
+        { q: "درس اول بر چه چیزی تأکید دارد؟", a: "نظارت خدا، شکر نعمت‌ها و استفاده درست از آنها.", opts: ["فقط نماز", "نظارت خدا و شکر نعمت‌ها", "فقط روزه", "فقط جنگ"], c: 1 },
+        { q: "خداوند بینای مهربان است یعنی چه؟", a: "همه چیز را می‌بیند و مهربان است.", opts: ["دور است", "همه را می‌بیند و مهربان است", "تنها می‌بیند", "مهربان نیست"], c: 1 }
+    ];
+
+    let currentMode = '';
+    let questions = [];
+    let currentIdx = 0;
+    let states = [];
+
+    function showSection(id) {
+        document.querySelectorAll('.container > div').forEach(d => d.classList.add('hidden'));
+        document.getElementById(`${id}-screen`).classList.remove('hidden');
+        if (id === 'menu') renderHistory();
+        window.scrollTo(0, 0);
+    }
+
+    function selectMode(m) {
+        currentMode = m;
+        document.querySelectorAll('.mode-card').forEach(c => c.classList.remove('active'));
+        document.getElementById(`mode-${m}`).classList.add('active');
+        document.getElementById('start-btn').disabled = false;
+    }
+
+    function startQuiz() {
+        questions = questionBank.map(q => {
+            let type = currentMode;
+            if (currentMode === 'mixed') type = Math.random() > 0.5 ? 'choice' : 'desc';
+            return { ...q, type };
+        });
+        states = questions.map(() => ({ ans: null, text: '', revealed: false, isCorrect: null }));
+        currentIdx = 0;
+        showSection('quiz');
+        renderQuestion();
+    }
+
+    function renderQuestion() {
+        const q = questions[currentIdx];
+        const s = states[currentIdx];
+        const card = document.getElementById('question-card');
+        document.getElementById('progress').innerText = `سوال ${currentIdx + 1} از ${questions.length}`;
+
+        let html = `<p style="font-size:1.15rem; font-weight:bold; margin-bottom:20px; color:var(--primary); line-height:1.6;">${q.q}</p>`;
+
+        if (q.type === 'choice') {
+            q.opts.forEach((o, i) => {
+                let cls = 'option-item';
+                if (s.ans === i) cls += ' selected';
+                if (s.revealed) {
+                    if (i === q.c) cls += ' correct';
+                    else if (s.ans === i) cls += ' wrong';
+                }
+                html += `<div class="${cls}" onclick="handleChoice(${i})">${o}</div>`;
+            });
+            html += `<button class="btn btn-outline" style="margin-top:10px; width:100%" onclick="reveal()">بررسی پاسخ درست</button>`;
+        } else {
+            html += `<textarea id="q-text" placeholder="پاسخ خود را اینجا بنویسید..." oninput="states[currentIdx].text=this.value">${s.text}</textarea>`;
+            html += `<button class="btn btn-outline" style="width:100%" onclick="reveal()">نمایش پاسخ کتاب و خودسنجی</button>`;
+        }
+
+        html += `
+            <div class="feedback-box ${s.revealed ? 'visible' : ''}">
+                <p style="color:var(--secondary); font-size:0.9rem; margin-bottom:5px;">پاسخ طبق متن درس:</p>
+                <p style="font-weight:bold; color:var(--primary);">${q.type === 'choice' ? q.opts[q.c] : q.a}</p>
+                ${q.type === 'desc' ? `
+                    <div style="display:flex; gap:10px; margin-top:10px">
+                        <button class="btn btn-outline" style="flex:1; border-color:var(--success); color:var(--success)" onclick="setEval(true)">درست نوشتم <i class="ph ph-check"></i></button>
+                        <button class="btn btn-outline" style="flex:1; border-color:var(--error); color:var(--error)" onclick="setEval(false)">اشتباه بود <i class="ph ph-x"></i></button>
+                    </div>
+                ` : ''}
+            </div>
+        `;
+        card.innerHTML = html;
+        updateNav();
+    }
+
+    function handleChoice(i) {
+        if (states[currentIdx].revealed) return;
+        states[currentIdx].ans = i;
+        states[currentIdx].isCorrect = (i === questions[currentIdx].c);
+        renderQuestion();
+    }
+
+    function reveal() {
+        states[currentIdx].revealed = true;
+        renderQuestion();
+    }
+
+    function setEval(v) {
+        states[currentIdx].isCorrect = v;
+        renderQuestion();
+    }
+
+    function nav(d) {
+        if (d === 1 && currentIdx === questions.length - 1) { finish(); return; }
+        currentIdx += d;
+        renderQuestion();
+    }
+
+    function updateNav() {
+        document.getElementById('prev-btn').disabled = currentIdx === 0;
+        document.getElementById('next-btn').innerHTML = currentIdx === questions.length - 1 ? 'پایان و نتیجه' : 'سوال بعدی <i class="ph ph-arrow-left"></i>';
+    }
+
+    function finish() {
+        showSection('result');
+        const score = states.filter(s => s.isCorrect === true).length;
+        document.getElementById('final-score').innerText = `${score} از ${questions.length}`;
+        document.getElementById('result-text').innerText = score > 25 ? "آفرین! شما بر درس بینای مهربان مسلط هستید." : "توصیه می‌شود درسنامه را یکبار دیگر مطالعه کنید.";
+        saveToStorage(score, questions.length);
+    }
+
+    function saveToStorage(s, t) {
+        const logs = JSON.parse(localStorage.getItem('payam_logs_lesson1') || '[]');
+        logs.push({ date: new Date().toLocaleDateString('fa-IR'), score: `${s}/${t}` });
+        localStorage.setItem('payam_logs_lesson1', JSON.stringify(logs.slice(-5)));
+    }
+
+    function renderHistory() {
+        const logs = JSON.parse(localStorage.getItem('payam_logs_lesson1') || '[]');
+        const section = document.getElementById('history-section');
+        const list = document.getElementById('history-list');
+        if (logs.length > 0) {
+            section.classList.remove('hidden');
+            list.innerHTML = logs.reverse().map(l => `
+                <div class="history-card">
+                    <div><div style="font-size:0.8rem; color:gray">${l.date}</div></div>
+                    <div style="font-weight:900; color:var(--accent)">${l.score}</div>
+                </div>
+            `).join('');
+        }
+    }
+
+    window.onload = renderHistory;
+</script>
+
+</body>
+</html>
+
