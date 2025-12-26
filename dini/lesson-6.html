@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>سامانه هوشمند آموزش و آزمون پیام‌های آسمانی</title>
+    <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazir-font@v30.1.0/dist/font-face.css" rel="stylesheet" type="text/css" />
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <style>
+        :root {
+            --primary: #0f172a;
+            --secondary: #475569;
+            --accent: #4f46e5;
+            --bg: #f8fafc;
+            --card: #ffffff;
+            --success: #059669;
+            --error: #dc2626;
+            --warning: #d97706;
+            --border: #e2e8f0;
+        }
+
+        * { box-sizing: border-box; font-family: 'Vazir', sans-serif; }
+
+        body {
+            background-color: var(--bg);
+            color: var(--primary);
+            margin: 0;
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .container { width: 100%; max-width: 850px; }
+
+        .card {
+            background: var(--card);
+            border-radius: 24px;
+            padding: 25px;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05);
+            border: 1px solid var(--border);
+            margin-bottom: 20px;
+            animation: fadeIn 0.4s ease-out;
+        }
+
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        header { text-align: center; margin-bottom: 30px; border-bottom: 2px solid var(--border); padding-bottom: 15px; }
+        header h1 { font-size: 1.6rem; margin: 0; color: var(--accent); }
+        header p { color: var(--secondary); margin-top: 8px; font-weight: bold; }
+
+        .btn { border: none; padding: 12px 24px; border-radius: 14px; cursor: pointer; font-weight: bold; display: inline-flex; align-items: center; gap: 8px; transition: all 0.2s; font-size: 1rem; }
+        .btn-primary { background: var(--accent); color: white; }
+        .btn-outline { background: white; border: 2px solid var(--border); color: var(--secondary); }
+        .btn:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(79, 70, 229, 0.2); }
+
+        .mode-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin: 25px 0; }
+        .mode-card {
+            border: 2px solid var(--border);
+            padding: 20px;
+            border-radius: 20px;
+            cursor: pointer;
+            text-align: center;
+            transition: 0.3s;
+        }
+        .mode-card:hover { border-color: var(--accent); background: #f5f3ff; }
+        .mode-card.active { border-color: var(--accent); background: #eef2ff; box-shadow: 0 0 0 2px var(--accent); }
+        .mode-card i { font-size: 2.5rem; color: var(--accent); margin-bottom: 10px; }
+
+        .option-item {
+            border: 2px solid var(--border);
+            border-radius: 14px;
+            padding: 15px;
+            margin-bottom: 10px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            transition: 0.2s;
+        }
+        .option-item:hover { border-color: var(--secondary); }
+        .option-item.selected { border-color: var(--accent); background: #f5f3ff; }
+        .option-item.correct { border-color: var(--success); background: #ecfdf5; color: var(--success); font-weight: bold; }
+        .option-item.wrong { border-color: var(--error); background: #fef2f2; color: var(--error); }
+
+        textarea { width: 100%; border: 2px solid var(--border); border-radius: 14px; padding: 15px; min-height: 120px; margin-bottom: 10px; font-size: 1rem; outline: none; }
+        textarea:focus { border-color: var(--accent); }
+
+        .feedback-box { background: #fffbeb; border-right: 5px solid var(--warning); padding: 15px; border-radius: 14px; margin-top: 15px; display: none; }
+        .feedback-box.visible { display: block; }
+
+        .history-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 10px; margin-top: 20px; }
+        .history-card { background: #f1f5f9; padding: 15px; border-radius: 16px; display: flex; justify-content: space-between; align-items: center; border: 1px solid var(--border); }
+        
+        .study-section { line-height: 1.8; color: #334155; }
+        .study-point { background: #f8fafc; border-right: 4px solid var(--accent); padding: 12px; margin-bottom: 10px; border-radius: 8px; font-size: 0.95rem; }
+        .study-point strong { color: var(--accent); }
+
+        .hidden { display: none; }
+        .navigation { display: flex; justify-content: space-between; margin-top: 20px; gap: 10px; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>پیام‌های آسمانی هفتم</h1>
+        <p>درس ۶: اسوه فداکاری و عدالت (آزمون جامع ۳۰ سوالی)</p>
+    </header>
+
+    <!-- Menu Screen -->
+    <div id="menu-screen" class="card">
+        <h2>منوی اصلی سامانه</h2>
+        <div style="display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 30px;">
+            <button class="btn btn-outline" style="border-color:var(--accent); color:var(--accent)" onclick="showSection('study')"><i class="ph ph-book-open"></i> مطالعه درسنامه جامع</button>
+            <button class="btn btn-primary" onclick="showSection('mode-selection')"><i class="ph ph-pencil-line"></i> شروع آزمون کامل</button>
+        </div>
+
+        <div id="history-section" class="hidden">
+            <h3 style="font-size: 1.1rem; border-bottom: 2px solid var(--bg); padding-bottom: 10px;"><i class="ph ph-clock-counter-clockwise"></i> نتایج آخرین تلاش‌های شما</h3>
+            <div id="history-list" class="history-grid"></div>
+        </div>
+    </div>
+
+    <!-- Study Screen -->
+    <div id="study-screen" class="card hidden">
+        <h2><i class="ph ph-book-open"></i> درسنامه جامع درس ۶</h2>
+        <div class="study-section">
+            <div class="study-point"><strong>مفهوم فداکاری:</strong> فداکار کسی است که برای خدمت به دین و جامعه، از مال، سلامتی، خانواده و حتی جان خود در راه هدفی پاک می‌گذرد. اسلام این افراد را ستایش کرده و به آن‌ها وعده پاداش الهی داده است.</div>
+            <div class="study-point"><strong>ماجرای لیلةالمبیت:</strong> شبی که حضرت علی (ع) در بستر پیامبر خوابید تا ایشان از مکه به مدینه هجرت کنند. علی (ع) فقط نگران سلامت پیامبر بود و برای کسب خشنودی خدا این خطر را پذیرفت.</div>
+            <div class="study-point"><strong>نمونه‌های فداکاری حضرت علی (ع):</strong> ۱. لیلةالمبیت ۲. نبرد با عمرو بن عبدود در جنگ خندق ۳. پایداری در جنگ احد ۴. ابلاغ آیات سوره توبه در میان مشرکان مکه.</div>
+            <div class="study-point"><strong>عدالت و مساوات:</strong> علی (ع) در تقسیم بیت‌المال هیچ‌گونه برتری برای نزدیکان (حتی عقیل) یا اعراب قائل نبود. او پس از تقسیم بیت‌المال به نماز شکر می‌ایستاد.</div>
+            <div class="study-point"><strong>عهد الهی با آگاهان:</strong> خداوند از دانشمندان و آگاهان پیمان گرفته که در برابر زیاده‌خواهی ستمگران و گرسنگی مظلومان سکوت نکنند.</div>
+            <div class="study-point"><strong>اثبات حقانیت اسلام:</strong> در دادگاه، وقتی قاضی تفاوتی بین علی (ع) (خلیفه وقت) و یک مرد مسیحی نگذاشت، مرد مسیحی با مشاهده این عدالت، مسلمان شد.</div>
+        </div>
+        <button class="btn btn-primary" style="margin-top:20px" onclick="showSection('menu')">بازگشت به منوی اصلی</button>
+    </div>
+
+    <!-- Mode Selection Screen -->
+    <div id="mode-selection-screen" class="card hidden">
+        <h2>سبک آزمون را انتخاب کنید</h2>
+        <p>آزمون شامل تمامی ۳۰ سوال بانک اطلاعاتی خواهد بود:</p>
+        <div class="mode-grid">
+            <div class="mode-card" id="mode-choice" onclick="selectMode('choice')">
+                <i class="ph ph-list-numbers"></i>
+                <h3>تستی</h3>
+                <p>گزینه‌ای</p>
+            </div>
+            <div class="mode-card" id="mode-desc" onclick="selectMode('desc')">
+                <i class="ph ph-note-pencil"></i>
+                <h3>تشریحی</h3>
+                <p>نوشتاری</p>
+            </div>
+            <div class="mode-card" id="mode-mixed" onclick="selectMode('mixed')">
+                <i class="ph ph-shuffle"></i>
+                <h3>ترکیبی</h3>
+                <p>هوشمند</p>
+            </div>
+        </div>
+        <div class="navigation">
+            <button class="btn btn-outline" onclick="showSection('menu')">انصراف</button>
+            <button class="btn btn-primary" id="start-btn" onclick="startQuiz()" disabled>شروع فرآیند آزمون</button>
+        </div>
+    </div>
+
+    <!-- Quiz Screen -->
+    <div id="quiz-screen" class="hidden">
+        <div id="progress" style="margin-bottom: 10px; font-weight: bold; color: var(--accent);"></div>
+        <div class="card" id="question-card"></div>
+        <div class="navigation">
+            <button class="btn btn-outline" id="prev-btn" onclick="nav(-1)">سوال قبلی</button>
+            <button class="btn btn-primary" id="next-btn" onclick="nav(1)">سوال بعدی</button>
+        </div>
+    </div>
+
+    <!-- Result Screen -->
+    <div id="result-screen" class="card hidden" style="text-align: center;">
+        <i class="ph ph-crown" style="font-size: 4rem; color: var(--warning);"></i>
+        <h2>آزمون به پایان رسید</h2>
+        <div id="final-score" style="font-size: 3.5rem; font-weight: 900; color: var(--accent); margin: 15px 0;"></div>
+        <p id="result-text" style="margin-bottom: 25px;"></p>
+        <button class="btn btn-primary" onclick="showSection('menu')">بازگشت به صفحه اصلی</button>
+    </div>
+</div>
+
+<script>
+    // بانک اطلاعاتی ۳۰ سوالی استخراج شده از تمام متون ارسالی کاربر
+    const questionBank = [
+        { q: "فداکار کیست؟", a: "کسی است که برای خدمت به دین و جامعه خود، از مال، سلامتی، خانواده و حتی جان خود بگذرد و آنها را در راه هدف پاک و بزرگش فدا کند.", opts: ["کسی که ثروتمند است", "کسی که از مال و جان در راه هدف پاک می‌گذرد", "کسی که فقط در جنگ شرکت می‌کند", "کسی که به خانواده خود می‌رسد"], c: 1 },
+        { q: "«لیلة المبیت» چه شبی است؟", a: "شبی که حضرت علی (ع) در بستر پیامبر (ص) خوابید تا ایشان به مدینه هجرت بفرماید.", opts: ["شب تولد پیامبر", "شبی که علی (ع) در بستر پیامبر خوابید", "شب فتح مکه", "شب معراج"], c: 1 },
+        { q: "سه نمونه از فداکاری‌های علی (ع) را بیان کنید.", a: "خوابیدن در بستر پیامبر (لیلة المبیت)، جنگیدن با عمرو بن عبدود در جنگ خندق، همراهی با پیامبر در جنگ احد تا آخرین لحظه.", opts: ["لیلة المبیت، خندق، احد", "خیبر، غدیر، بدر", "فتح مکه، حنین، طائف", "تبوک، جمل، صفین"], c: 0 },
+        { q: "دو ویژگی بارز علی (ع) را بیان کنید.", a: "عدالت طلبی و مساوات – فداکاری و گذشت.", opts: ["شجاعت و ثروت", "عدالت طلبی و فداکاری", "سخاوت و تجارت", "علم و نویسندگی"], c: 1 },
+        { q: "بنا به فرمایش امیر المؤمنین، خدا از آگاهان در برابر شکم‌بارگی ستمگران چه عهدی گرفته است؟", a: "که در برابر زیاده خواهی ستمگران و گرسنگی مظلومان، سکوت نکنند و حق مظلوم را از ظالم بستانند و به او بازگردانند.", opts: ["که نماز بخوانند", "که در برابر زیاده‌خواهی ستمگران سکوت نکنند", "که به فقرا صدقه دهند", "که از جامعه دوری کنند"], c: 1 },
+        { q: "چرا علی (ع) حکومت را پذیرفت؟", a: "عهد و پیمان الهی - گرفتن حق مظلوم از ظالم.", opts: ["به خاطر اصرار خانواده", "برای گرفتن حق مظلوم از ظالم", "برای کسب ثروت دنیوی", "چون جایگزینی نداشت"], c: 1 },
+        { q: "علی (ع) در حقوق عمومی و مسائل اجتماعی و تقسیم بیت‌المال چگونه رفتار می‌کرد؟", a: "با خانواده و نزدیکان خود مانند مسلمانان دیگر، رفتار می‌کرد.", opts: ["نزدیکان خود را مقدم می‌داشت", "با نزدیکان خود مانند سایر مسلمانان رفتار می‌کرد", "به اعراب سهم بیشتری می‌داد", "بیت‌المال را ذخیره می‌کرد"], c: 1 },
+        { q: "مرد مسیحی چگونه به حقانیت دین اسلام پی برد و مسلمان شد؟", a: "او وقتی دید که در دادگاه، یک فرد مسیحی با پیشوا و رهبر جامعه، برابر است و به سود او و زیان رهبر، حکم می‌دهد.", opts: ["با معجزه", "با دیدن برابری در دادگاه و حکم علیه رهبر", "با مطالعه قرآن", "با اخلاق نیکوی یاران پیامبر"], c: 1 },
+        { q: "چرا امیر مؤمنان بدون هیچ ترس و نگرانی خوابیدن در بستر پیامبر را پذیرفت؟", a: "برای کسب خشنودی خدا.", opts: ["برای نمایش شجاعت", "برای کسب خشنودی خدا", "برای شهرت", "چون راه دیگری نداشت"], c: 1 },
+        { q: "دین اسلام نسبت به افراد فداکار چه عکس‌العمل و وعده‌ای داده است؟", a: "دین اسلام، افراد فداکار را ستایش کرده و به آنان وعده پاداش الهی داده است.", opts: ["پاداش دنیوی", "وعده پاداش الهی و ستایش", "معافیت از جنگ", "ثروت فراوان"], c: 1 },
+        { q: "علی (ع) در چه شرایطی از سوی مردم به اداره حکومت انتخاب شد؟", a: "در شرایطی که مشکلات بسیاری، جامعه اسلامی را فراگرفته بود.", opts: ["در زمان صلح و آرامش", "زمانی که مشکلات بسیاری جامعه را فراگرفته بود", "در زمان جنگ با رومیان", "بلافاصله بعد از رحلت پیامبر"], c: 1 },
+        { q: "چرا فرشته وحی دستور داد پیامبر شبانه مکه را ترک نماید؟", a: "زیرا به وسیله مشرکان کشته می‌شد و رسالتش ناتمام می‌ماند.", opts: ["برای تبلیغ در مدینه", "چون مشرکان قصد قتل ایشان را داشتند", "برای زیارت", "به امر پادشاه حبشه"], c: 1 },
+        { q: "وقتی رسول خدا پرسید: «علی جان آیا می‌توانی مرا یاری کنی؟» چه پاسخی شنید؟", a: "در این صورت آیا شما به سلامت خواهید بود؟", opts: ["بله حتما", "در این صورت آیا شما به سلامت خواهید بود؟", "من می‌ترسم", "اجازه دهید فکر کنم"], c: 1 },
+        { q: "کدام آیه در ستایش فداکاری بی نظیر علی (ع) در شب هجرت نازل شد؟", a: "وَ مِنَ النّاسِ مَن یَشری نَفسَهُ ابتِغاءَ مَرضاتِ اللَّهِ (آیه شراء).", opts: ["آیه تطهیر", "آیه شراء (سوره بقره)", "آیه ولایت", "آیه اطاعت"], c: 1 },
+        { q: "یکی از کامل‌ترین نمونه‌های فداکاری در راه خدا کدام است؟", a: "ماجرای از خود گذشتگی حضرت علی (ع) در لیلة المبیت.", opts: ["فتح خیبر", "لیلة المبیت", "جنگ خندق", "غدیر خم"], c: 1 },
+        { q: "علی (ع) پس از تقسیم بیت‌المال، چه می‌کرد؟", a: "در همان محل به نماز شکر می‌ایستاد.", opts: ["استراحت می‌کرد", "به نماز شکر می‌ایستاد", "سخنرانی می‌کرد", "به خانه می‌رفت"], c: 1 },
+        { q: "دلیل رسیدگی دقیق بیت‌المال از سوی امیرالمؤمنین چه بود؟", a: "تا از حساب سخت روز قیامت و عذاب دردناک آن در امان باشم.", opts: ["ترس از مردم", "امان از حساب قیامت", "نشان دادن نظم", "جلوگیری از شورش"], c: 1 },
+        { q: "نمونه فداکاری علی (ع) در جنگ احد چه بود؟", a: "دفاع از پیامبر و همراهی با ایشان تا آخرین لحظه.", opts: ["دفاع تا آخرین لحظه از پیامبر", "فرار به کوه", "آوردن آب برای سربازان", "هدایت اسیران"], c: 0 },
+        { q: "ابلاغ آیات سوره توبه نشان‌دهنده کدام ویژگی علی (ع) است؟", a: "فداکاری و پذیرش مسئولیت‌های خطرناک.", opts: ["ثروت", "فداکاری و شجاعت", "نویسندگی", "تجارت"], c: 1 },
+        { q: "در داستان مرد مسیحی، زره خلیفه در دست چه کسی بود؟", a: "در دست یک مرد مسیحی.", opts: ["در دست عمار", "در دست مرد مسیحی", "در دست حاکم کوفه", "گم شده بود"], c: 1 },
+        { q: "چرا علی (ع) در حقوق عمومی با نزدیکان خود مانند دیگران رفتار می‌کرد؟", a: "برای رعایت عدالت و مساوات و امان ماندن از حساب قیامت.", opts: ["برای نمایش قدرت", "برای رعایت عدالت و مساوات", "چون نزدیکانش ثروتمند بودند", "چون قانونی وجود نداشت"], c: 1 },
+        { q: "فداکار برای چه هدفی از جان و مال خود می‌گذرد؟", a: "برای خدمت به دین و جامعه خود در راه هدفی پاک و بزرگ.", opts: ["برای کسب شهرت", "خدمت به دین و جامعه در راه هدف پاک", "برای کسب ثروت", "برای جلب توجه مردم"], c: 1 },
+        { q: "واکنش قاضی در داستان مرد مسیحی نسبت به خلیفه چه بود؟", a: "قاضی تفاوتی بین خلیفه و مرد مسیحی نگذاشت و علیه خلیفه حکم داد.", opts: ["طرف خلیفه را گرفت", "تفاوتی نگذاشت و علیه خلیفه حکم داد", "مرد مسیحی را تنبیه کرد", "دادگاه را تعطیل کرد"], c: 1 },
+        { q: "امیرالمومنین در چه زمانی به نماز شکر می‌ایستاد؟", a: "پس از تقسیم عادلانه بیت‌المال.", opts: ["قبل از شروع جنگ", "پس از تقسیم بیت‌المال", "پس از پیروزی", "در پایان هر روز"], c: 1 },
+        { q: "حضرت علی (ع) در رعایت عدالت و مساوات بین مسلمانان چگونه بود؟", a: "هیچ کس را بر دیگری برتری نمی‌داد.", opts: ["اعراب را برتر می‌دانست", "هیچ کس را بر دیگری برتری نمی‌داد", "یاران قدیمی را برتر می‌دانست", "به ثروتمندان بیشتر می‌داد"], c: 1 },
+        { q: "کدام گزینه یکی از ویژگی‌های بارز علی (ع) است؟", a: "عدالت‌طلبی و مساوات.", opts: ["ثروت اندوزی", "عدالت‌طلبی و مساوات", "گوشه‌نشینی", "تجارت گسترده"], c: 1 },
+        { q: "در داستان درس، مرد مسیحی پس از دیدن عدالت چه کرد؟", a: "به حقانیت اسلام پی برد و مسلمان شد.", opts: ["فرار کرد", "مسلمان شد", "تعجب کرد", "شکایت کرد"], c: 1 },
+        { q: "منظور از عهد الهی با آگاهان چیست؟", a: "سکوت نکردن در برابر ستم ستمگران و یاری مظلومان.", opts: ["فقط درس خواندن", "سکوت نکردن در برابر ستم و یاری مظلوم", "دوری از سیاست", "رعایت حجاب"], c: 1 },
+        { q: "در جنگ احد چه کسی تا آخرین لحظه در کنار پیامبر ماند؟", a: "حضرت علی (ع).", opts: ["ابوبکر", "علی (ع)", "عثمان", "طلحه"], c: 1 },
+        { q: "چه کسی مسئولیت خطرناک خواندن آیات سوره توبه را در مکه پذیرفت؟", a: "حضرت علی (ع).", opts: ["عمار", "علی (ع)", "ابوذر", "سلمان"], c: 1 }
+    ];
+
+    let currentMode = '';
+    let questions = [];
+    let currentIdx = 0;
+    let states = [];
+
+    function showSection(id) {
+        document.querySelectorAll('.container > div').forEach(d => d.classList.add('hidden'));
+        document.getElementById(`${id}-screen`).classList.remove('hidden');
+        if (id === 'menu') renderHistory();
+        window.scrollTo(0, 0);
+    }
+
+    function selectMode(m) {
+        currentMode = m;
+        document.querySelectorAll('.mode-card').forEach(c => c.classList.remove('active'));
+        document.getElementById(`mode-${m}`).classList.add('active');
+        document.getElementById('start-btn').disabled = false;
+    }
+
+    function startQuiz() {
+        questions = questionBank.map(q => {
+            let type = currentMode;
+            if (currentMode === 'mixed') type = Math.random() > 0.5 ? 'choice' : 'desc';
+            return { ...q, type };
+        });
+        states = questions.map(() => ({ ans: null, text: '', revealed: false, isCorrect: null }));
+        currentIdx = 0;
+        showSection('quiz');
+        renderQuestion();
+    }
+
+    function renderQuestion() {
+        const q = questions[currentIdx];
+        const s = states[currentIdx];
+        const card = document.getElementById('question-card');
+        document.getElementById('progress').innerText = `سوال ${currentIdx + 1} از ${questions.length}`;
+
+        let html = `<p style="font-size:1.15rem; font-weight:bold; margin-bottom:20px; color:var(--primary); line-height:1.6;">${q.q}</p>`;
+
+        if (q.type === 'choice') {
+            q.opts.forEach((o, i) => {
+                let cls = 'option-item';
+                if (s.ans === i) cls += ' selected';
+                if (s.revealed) {
+                    if (i === q.c) cls += ' correct';
+                    else if (s.ans === i) cls += ' wrong';
+                }
+                html += `<div class="${cls}" onclick="handleChoice(${i})">${o}</div>`;
+            });
+            html += `<button class="btn btn-outline" style="margin-top:10px; width:100%" onclick="reveal()">نمایش پاسخ مرجع</button>`;
+        } else {
+            html += `<textarea id="q-text" placeholder="پاسخ تشریحی خود را اینجا بنویسید..." oninput="states[currentIdx].text=this.value">${s.text}</textarea>`;
+            html += `<button class="btn btn-outline" style="width:100%" onclick="reveal()">مشاهده پاسخ کتاب و تایید صحت</button>`;
+        }
+
+        html += `
+            <div class="feedback-box ${s.revealed ? 'visible' : ''}">
+                <p style="color:var(--secondary); font-size:0.9rem; margin-bottom:5px;">پاسخ درست کتاب:</p>
+                <p style="font-weight:bold; color:var(--primary);">${q.type === 'choice' ? q.opts[q.c] : q.a}</p>
+                ${q.type === 'desc' ? `
+                    <div style="display:flex; gap:10px; margin-top:10px">
+                        <button class="btn btn-outline" style="flex:1; border-color:var(--success); color:var(--success)" onclick="setEval(true)">درست بود <i class="ph ph-check"></i></button>
+                        <button class="btn btn-outline" style="flex:1; border-color:var(--error); color:var(--error)" onclick="setEval(false)">اشتباه بود <i class="ph ph-x"></i></button>
+                    </div>
+                ` : ''}
+            </div>
+        `;
+        card.innerHTML = html;
+        updateNav();
+    }
+
+    function handleChoice(i) {
+        if (states[currentIdx].revealed) return;
+        states[currentIdx].ans = i;
+        states[currentIdx].isCorrect = (i === questions[currentIdx].c);
+        renderQuestion();
+    }
+
+    function reveal() {
+        states[currentIdx].revealed = true;
+        renderQuestion();
+    }
+
+    function setEval(v) {
+        states[currentIdx].isCorrect = v;
+        renderQuestion();
+    }
+
+    function nav(d) {
+        if (d === 1 && currentIdx === questions.length - 1) { finish(); return; }
+        currentIdx += d;
+        renderQuestion();
+    }
+
+    function updateNav() {
+        document.getElementById('prev-btn').disabled = currentIdx === 0;
+        document.getElementById('next-btn').innerHTML = currentIdx === questions.length - 1 ? 'پایان آزمون' : 'سوال بعدی <i class="ph ph-arrow-left"></i>';
+    }
+
+    function finish() {
+        showSection('result');
+        const score = states.filter(s => s.isCorrect === true).length;
+        document.getElementById('final-score').innerText = `${score} از ${questions.length}`;
+        document.getElementById('result-text').innerText = score > 25 ? "آفرین! تسلط شما به تمامی جزئیات درس فوق‌العاده است." : "نتیجه خوبی بود، اما پیشنهاد می‌شود درسنامه را یک بار دیگر مرور کنید.";
+        saveToStorage(score, questions.length);
+    }
+
+    function saveToStorage(s, t) {
+        const logs = JSON.parse(localStorage.getItem('payam_logs_ultra') || '[]');
+        logs.push({ date: new Date().toLocaleDateString('fa-IR'), score: `${s}/${t}` });
+        localStorage.setItem('payam_logs_ultra', JSON.stringify(logs.slice(-5)));
+    }
+
+    function renderHistory() {
+        const logs = JSON.parse(localStorage.getItem('payam_logs_ultra') || '[]');
+        const section = document.getElementById('history-section');
+        const list = document.getElementById('history-list');
+        if (logs.length > 0) {
+            section.classList.remove('hidden');
+            list.innerHTML = logs.reverse().map(l => `
+                <div class="history-card">
+                    <div><div style="font-size:0.8rem; color:gray">${l.date}</div></div>
+                    <div style="font-weight:900; color:var(--accent)">${l.score}</div>
+                </div>
+            `).join('');
+        }
+    }
+
+    window.onload = renderHistory;
+</script>
+
+</body>
+</html>
+
