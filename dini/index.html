@@ -3,15 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>سامانه آزمون پیام‌های آسمانی هفتم</title>
+    <title>کتاب از من تا خدا - تربیت دینی هفتم</title>
     <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazir-font@v30.1.0/dist/font-face.css" rel="stylesheet" type="text/css" />
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
     <style>
         :root {
             --primary: #1e293b;
             --secondary: #64748b;
-            --accent: #4f46e5;
-            --bg: #f1f5f9;
+            --accent: #0f766e;
+            --bg: #f8fafc;
             --card: #ffffff;
             --border: #e2e8f0;
             --text-main: #0f172a;
@@ -20,7 +20,7 @@
         * {
             box-sizing: border-box;
             font-family: 'Vazir', sans-serif;
-            transition: all 0.3s ease;
+            transition: all 0.2s ease;
         }
 
         body {
@@ -36,116 +36,133 @@
 
         header {
             width: 100%;
-            background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+            background: linear-gradient(135deg, #0f766e 0%, #134e4a 100%);
             color: white;
-            padding: 40px 20px;
+            padding: 60px 20px;
             text-align: center;
-            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+            box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1);
             margin-bottom: 40px;
         }
 
         header h1 {
             margin: 0;
-            font-size: 1.8rem;
+            font-size: 2.4rem;
             font-weight: 900;
         }
 
         header p {
-            margin: 10px 0 0;
+            margin: 15px 0 0;
             opacity: 0.9;
-            font-size: 1rem;
+            font-size: 1.1rem;
+            font-weight: 300;
         }
 
         .container {
             width: 100%;
-            max-width: 900px;
-            padding: 0 20px 40px;
+            max-width: 1100px;
+            padding: 0 20px 60px;
         }
 
-        .search-box {
+        .search-container {
             position: relative;
-            margin-bottom: 30px;
+            margin-bottom: 40px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
         }
 
-        .search-box input {
+        .search-container input {
             width: 100%;
-            padding: 15px 45px 15px 15px;
-            border-radius: 12px;
-            border: 1px solid var(--border);
-            font-size: 1rem;
+            padding: 18px 50px 18px 20px;
+            border-radius: 20px;
+            border: 2px solid var(--border);
+            font-size: 1.1rem;
             outline: none;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
         }
 
-        .search-box i {
+        .search-container input:focus {
+            border-color: var(--accent);
+            box-shadow: 0 0 0 4px rgba(15, 118, 110, 0.1);
+        }
+
+        .search-container i {
             position: absolute;
-            right: 15px;
+            right: 20px;
             top: 50%;
             transform: translateY(-50%);
             color: var(--secondary);
-            font-size: 1.2rem;
+            font-size: 1.4rem;
         }
 
         .lessons-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 20px;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 25px;
         }
 
         .lesson-card {
             background: var(--card);
-            border-radius: 16px;
-            padding: 20px;
+            border-radius: 24px;
+            padding: 25px;
             border: 1px solid var(--border);
             display: flex;
             align-items: center;
-            gap: 15px;
+            gap: 20px;
             text-decoration: none;
             color: inherit;
-            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.05);
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
+            position: relative;
         }
 
         .lesson-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1);
+            transform: translateY(-8px);
+            box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1);
             border-color: var(--accent);
         }
 
-        .icon-wrapper {
-            width: 50px;
-            height: 50px;
-            background: #eef2ff;
-            border-radius: 12px;
+        .icon-box {
+            width: 65px;
+            height: 65px;
+            background: #f0fdfa;
+            border-radius: 20px;
             display: flex;
             align-items: center;
             justify-content: center;
             color: var(--accent);
-            font-size: 1.5rem;
+            font-size: 2rem;
             flex-shrink: 0;
         }
 
-        .lesson-info h3 {
+        .lesson-content h3 {
             margin: 0;
-            font-size: 1.1rem;
-            color: var(--primary);
+            font-size: 0.85rem;
+            color: var(--accent);
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
 
-        .lesson-info p {
+        .lesson-content p {
             margin: 5px 0 0;
-            font-size: 0.85rem;
-            color: var(--secondary);
+            font-size: 1.15rem;
+            color: var(--primary);
+            font-weight: 800;
         }
 
         .footer {
             margin-top: auto;
-            padding: 20px;
+            padding: 40px;
             text-align: center;
             color: var(--secondary);
-            font-size: 0.8rem;
+            font-size: 0.95rem;
+            border-top: 1px solid var(--border);
+            width: 100%;
+            background: white;
         }
 
-        @media (max-width: 480px) {
-            header h1 { font-size: 1.5rem; }
+        @media (max-width: 600px) {
+            header h1 { font-size: 1.8rem; }
             .lessons-grid { grid-template-columns: 1fr; }
         }
     </style>
@@ -153,58 +170,57 @@
 <body>
 
 <header>
-    <h1>سامانه آزمون‌های پیام‌های آسمانی</h1>
-    <p>پایه هفتم دوره اول متوسطه</p>
+    <h1>کتاب از من تا خدا</h1>
+    <p>مجموعه آزمون‌های تربیت دینی پایه هفتم متوسطه</p>
 </header>
 
 <div class="container">
-    <div class="search-box">
+    <div class="search-container">
         <i class="ph ph-magnifying-glass"></i>
-        <input type="text" id="searchInput" placeholder="جستجوی شماره یا عنوان درس..." oninput="filterLessons()">
+        <input type="text" id="searchInput" placeholder="جستجوی نام یا شماره درس..." oninput="filterLessons()">
     </div>
 
     <div class="lessons-grid" id="lessonsGrid">
-        <!-- Lessons will be generated here -->
+        <!-- در این بخش دروس توسط جاوااسکریپت ساخته می‌شوند -->
     </div>
 </div>
 
 <div class="footer">
-    طراحی شده برای دانش‌آموزان کوشا
+    طراحی شده برای یادگیری هوشمند - کتاب جدید تربیت دینی هفتم
 </div>
 
 <script>
+    // اسامی نهایی دروس کتاب جدید "از من تا خدا" - پایه هفتم
     const lessons = [
-        { id: 1, title: "بینای توانا", icon: "ph-eye" },
-        { id: 2, title: "استعانت از خدا", icon: "ph-hands-praying" },
-        { id: 3, title: "تلخ یا شیرین", icon: "ph-info" },
-        { id: 4, title: "عبور آسان", icon: "ph-path" },
-        { id: 5, title: "پیامبر رحمت", icon: "ph-heart" },
-        { id: 6, title: "اسوه فداکاری و عدالت", icon: "ph-shield-check" },
-        { id: 7, title: "برترین بانو", icon: "ph-star" },
-        { id: 8, title: "افتخار بندگی", icon: "ph-medal" },
-        { id: 9, title: "به سوی پاکی", icon: "ph-drop" },
-        { id: 10, title: "ستون دین", icon: "ph-mosque" },
-        { id: 11, title: "نماز جماعت", icon: "ph-users-three" },
-        { id: 12, title: "نشان ارزشمندی", icon: "ph-crown" },
-        { id: 13, title: "بر بال فرشتگان", icon: "ph-bird" },
-        { id: 14, title: "کمال همنشین", icon: "ph-user-plus" },
-        { id: 15, title: "مزدوران شیطان", icon: "ph-warning-octagon" }
+        { id: 1, title: "آرامشم تو هستی", icon: "ph-sun" },
+        { id: 2, title: "تویی که می‌شناسی‌ام", icon: "ph-user-focus" },
+        { id: 3, title: "مرا رها نمی‌کنی", icon: "ph-hand-heart" },
+        { id: 4, title: "امید بسته‌ام به تو", icon: "ph-anchor" },
+        { id: 5, title: "با تو صبور می‌شوم", icon: "ph-heartbeat" },
+        { id: 6, title: "تو خدای بزرگ منی", icon: "ph-mountains" },
+        { id: 7, title: "تویی آبادی زندگی‌ام", icon: "ph-tree-evergreen" },
+        { id: 8, title: "می‌خواهم شاکرت باشم", icon: "ph-hands-praying" },
+        { id: 9, title: "تو نجاتم دادی", icon: "ph-lifebuoy" },
+        { id: 10, title: "راهی که نشانم دادی", icon: "ph-map-trifold" },
+        { id: 11, title: "در سایه امن تو", icon: "ph-house-line" }
     ];
-
-    const baseUrl = "https://rkarimabadi.github.io/shadi/dini/";
 
     function renderLessons(data) {
         const grid = document.getElementById('lessonsGrid');
+        if (data.length === 0) {
+            grid.innerHTML = '<p style="text-align:center; grid-column: 1/-1; color: var(--secondary);">درسی پیدا نشد.</p>';
+            return;
+        }
         grid.innerHTML = data.map(lesson => `
-            <a href="${baseUrl}lesson-${lesson.id}.html" class="lesson-card">
-                <div class="icon-wrapper">
-                    <i class="ph ${lesson.icon}"></i>
+            <a href="exam.html?lesson=${lesson.id}" class="lesson-card">
+                <div class="icon-box">
+                    <i class="ph-duotone ${lesson.icon}"></i>
                 </div>
-                <div class="lesson-info">
+                <div class="lesson-content">
                     <h3>درس ${lesson.id}</h3>
                     <p>${lesson.title}</p>
                 </div>
-                <i class="ph ph-caret-left" style="margin-right: auto; color: #cbd5e1;"></i>
+                <i class="ph ph-arrow-left" style="margin-right: auto; color: #cbd5e1; font-size: 1.2rem;"></i>
             </a>
         `).join('');
     }
@@ -212,13 +228,12 @@
     function filterLessons() {
         const term = document.getElementById('searchInput').value.toLowerCase();
         const filtered = lessons.filter(l => 
-            l.title.toLowerCase().includes(term) || 
+            l.title.includes(term) || 
             l.id.toString().includes(term)
         );
         renderLessons(filtered);
     }
 
-    // Initial render
     window.onload = () => renderLessons(lessons);
 </script>
 
