@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>آزمون هوشمند پیام‌های آسمان</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Vazirmatn:wght@100;400;700;900&display=swap');
+        body { font-family: 'Vazirmatn', sans-serif; }
+        .hidden { display: none; }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-900 p-4">
+
+    <div id="app" class="min-h-screen flex flex-col items-center">
+        <div class="w-full max-w-xl">
+            
+            <!-- Header -->
+            <header class="py-8 text-center">
+                <div class="inline-flex items-center justify-center p-3 bg-blue-600 text-white rounded-2xl shadow-lg mb-4">
+                    <i class="fas fa-graduation-cap text-3xl"></i>
+                </div>
+                <h1 id="main-title" class="text-2xl font-black text-slate-800">آموزش هوشمند پیام‌های آسمان</h1>
+                <p id="lesson-info" class="text-slate-500 text-sm mt-1">در حال بارگذاری اطلاعات درس...</p>
+            </header>
+
+            <!-- Views Container -->
+            <div id="views-container">
+                
+                <!-- Main Menu -->
+                <div id="view-menu" class="bg-white rounded-3xl p-6 shadow-xl border border-slate-100 space-y-6">
+                    <div class="space-y-2">
+                        <label class="text-sm font-bold text-slate-600">نام خود را وارد کنید:</label>
+                        <input id="user-name-input" type="text" placeholder="مثلاً: علی رضایی" class="w-full p-4 bg-slate-50 border-2 border-slate-100 rounded-2xl focus:border-blue-500 outline-none transition-all text-center font-bold">
+                    </div>
+                    <div class="grid grid-cols-1 gap-3">
+                        <button onclick="switchView('view-mode-selection')" class="flex items-center gap-4 p-5 bg-blue-600 text-white rounded-2xl font-bold hover:bg-blue-700 transition-all shadow-md">
+                            <i class="fas fa-list-check text-xl"></i>
+                            <div class="text-right flex-1">
+                                <div>شروع آزمون هوشمند</div>
+                                <div class="text-[10px] opacity-80 font-normal">آمادگی برای امتحان و خودارزیابی</div>
+                            </div>
+                        </button>
+                        <button onclick="openStudyView()" class="flex items-center gap-4 p-5 bg-white border-2 border-slate-100 text-slate-700 rounded-2xl font-bold hover:bg-slate-50 transition-all">
+                            <i class="fas fa-book-open text-blue-500 text-xl"></i>
+                            <div class="text-right flex-1">
+                                <div>مطالعه نکات مهم درس</div>
+                                <div class="text-[10px] text-slate-400 font-normal">مرور سریع مفاهیم کلیدی</div>
+                            </div>
+                        </button>
+                        <button onclick="switchView('view-history')" class="flex items-center justify-center gap-2 py-3 text-slate-400 hover:text-slate-600 text-sm font-medium">
+                            <i class="fas fa-history"></i> مشاهده سوابق
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Mode Selection -->
+                <div id="view-mode-selection" class="hidden bg-white rounded-3xl p-6 shadow-xl border border-slate-100 space-y-4">
+                    <h2 class="text-lg font-bold text-center mb-2">نوع سوالات را انتخاب کنید</h2>
+                    <button onclick="startQuiz('choice')" class="w-full p-4 border-2 border-slate-100 rounded-2xl flex items-center gap-4 hover:border-blue-500 hover:bg-blue-50 transition-all">
+                        <i class="fas fa-tasks p-3 bg-blue-100 text-blue-600 rounded-xl"></i>
+                        <div class="text-right"><div class="font-bold">فقط تستی</div></div>
+                    </button>
+                    <button onclick="startQuiz('desc')" class="w-full p-4 border-2 border-slate-100 rounded-2xl flex items-center gap-4 hover:border-blue-500 hover:bg-blue-50 transition-all">
+                        <i class="fas fa-file-alt p-3 bg-blue-100 text-blue-600 rounded-xl"></i>
+                        <div class="text-right"><div class="font-bold">فقط تشریحی</div></div>
+                    </button>
+                    <button onclick="switchView('view-menu')" class="w-full py-4 text-slate-400 font-bold text-sm">انصراف</button>
+                </div>
+
+                <!-- Quiz View -->
+                <div id="view-quiz" class="hidden bg-white rounded-3xl p-6 shadow-xl border border-slate-100">
+                    <div id="quiz-progress" class="mb-6">
+                        <div class="flex justify-between text-[10px] font-bold text-slate-400 mb-2">
+                            <span id="progress-text">سوال ۱ از ۱۰</span>
+                            <span id="progress-percent">0%</span>
+                        </div>
+                        <div class="h-1.5 w-full bg-slate-100 rounded-full overflow-hidden">
+                            <div id="progress-bar" class="h-full bg-blue-600 transition-all duration-300" style="width: 0%"></div>
+                        </div>
+                    </div>
+                    <h3 id="question-text" class="text-lg font-bold text-slate-800 leading-relaxed mb-6">...</h3>
+                    <div id="options-container" class="space-y-3 min-h-[200px]"></div>
+                    <div id="feedback-container" class="hidden mt-6 p-4 bg-amber-50 border border-amber-200 rounded-2xl space-y-2">
+                        <div class="flex items-center gap-2 text-amber-700 font-bold text-sm"><i class="fas fa-check-circle"></i> پاسخ صحیح:</div>
+                        <p id="correct-answer-text" class="text-slate-700 text-sm leading-relaxed"></p>
+                        <div id="manual-grading" class="hidden flex gap-2 pt-2">
+                            <button onclick="markCorrect(true)" class="flex-1 bg-emerald-600 text-white py-2 rounded-xl text-xs font-bold">درست بود</button>
+                            <button onclick="markCorrect(false)" class="flex-1 bg-rose-600 text-white py-2 rounded-xl text-xs font-bold">اشتباه بود</button>
+                        </div>
+                    </div>
+                    <div class="mt-8">
+                        <button id="check-btn" onclick="checkAnswer()" class="w-full bg-blue-600 text-white py-4 rounded-2xl font-black shadow-lg shadow-blue-100">بررسی پاسخ</button>
+                        <button id="next-btn" onclick="handleNext()" class="hidden w-full bg-slate-800 text-white py-4 rounded-2xl font-black">سوال بعدی</button>
+                    </div>
+                </div>
+
+                <!-- Result View -->
+                <div id="view-result" class="hidden bg-white rounded-3xl p-8 shadow-xl text-center space-y-6">
+                    <i class="fas fa-trophy text-6xl text-amber-500"></i>
+                    <h2 class="text-2xl font-black">آفرین <span id="res-user-name"></span>!</h2>
+                    <div class="bg-blue-50 rounded-3xl py-8 border border-blue-100">
+                        <div class="text-5xl font-black text-blue-600 mb-1"><span id="res-score">0</span> <span class="text-xl text-blue-300">/ <span id="res-total">0</span></span></div>
+                        <div class="text-blue-700 font-bold text-sm">پاسخ‌های صحیح شما</div>
+                    </div>
+                    <button onclick="switchView('view-menu')" class="w-full bg-slate-900 text-white py-4 rounded-2xl font-bold">بازگشت به منو</button>
+                </div>
+
+                <!-- Study View -->
+                <div id="view-study" class="hidden bg-white rounded-3xl p-6 shadow-xl space-y-6">
+                    <h2 class="text-xl font-black text-blue-700">خلاصه مفاهیم درس</h2>
+                    <div id="study-content" class="space-y-4"></div>
+                    <button onclick="switchView('view-menu')" class="w-full bg-slate-900 text-white py-4 rounded-2xl font-bold">متوجه شدم</button>
+                </div>
+
+                <!-- History View -->
+                <div id="view-history" class="hidden bg-white rounded-3xl p-6 shadow-xl space-y-6">
+                    <h2 class="text-xl font-bold"><i class="fas fa-history text-blue-600"></i> سوابق من</h2>
+                    <div id="history-list" class="space-y-3 min-h-[200px]"></div>
+                    <button onclick="clearHistory()" class="text-rose-500 text-xs font-bold w-full">پاکسازی تاریخچه</button>
+                    <button onclick="switchView('view-menu')" class="w-full py-2 font-bold text-blue-600">بازگشت</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // State Management
+        let appData = { lessonTitle: '', questions: [], summary: [] };
+        let quizState = { currentIdx: 0, score: 0, userAnswers: [], currentMode: '' };
+        let history = JSON.parse(localStorage.getItem('quiz_history') || '[]');
+
+        // 1. دریافت شماره درس از آدرس (مثلاً ?lesson=1)
+        function getLessonNumber() {
+            const params = new URLSearchParams(window.location.search);
+            return params.get('lesson') || '1'; // پیش‌فرض درس ۱
+        }
+
+        // 2. واکشی فایل JSON بر اساس شماره درس
+        async function fetchLessonData() {
+            const lessonNum = getLessonNumber();
+            const fileName = `lesson${lessonNum}.json`;
+            
+            try {
+                const response = await fetch(fileName);
+                if (!response.ok) throw new Error('فایل یافت نشد');
+                appData = await response.json();
+                
+                // بروزرسانی UI با اطلاعات فایل
+                document.getElementById('lesson-info').innerText = `${appData.grade || ''} • ${appData.lessonTitle}`;
+            } catch (error) {
+                console.error('Error fetching data:', error);
+                document.getElementById('lesson-info').innerHTML = `<span class="text-rose-500">خطا در بارگذاری درس ${lessonNum}. مطمئن شوید ${fileName} در کنار فایل اصلی است.</span>`;
+            }
+        }
+
+        // View Switching Logic
+        function switchView(viewId) {
+            document.querySelectorAll('#views-container > div').forEach(div => div.classList.add('hidden'));
+            document.getElementById(viewId).classList.remove('hidden');
+        }
+
+        // Quiz Logic
+        function startQuiz(mode) {
+            const name = document.getElementById('user-name-input').value;
+            if (!name.trim()) return alert('لطفاً نام خود را وارد کنید');
+            
+            quizState = { currentIdx: 0, score: 0, userAnswers: [], currentMode: mode };
+            // Shuffle questions for quiz
+            quizState.questions = [...appData.questions].sort(() => Math.random() - 0.5);
+            
+            renderQuestion();
+            switchView('view-quiz');
+        }
+
+        function renderQuestion() {
+            const q = quizState.questions[quizState.currentIdx];
+            document.getElementById('question-text').innerText = q.q;
+            document.getElementById('progress-text').innerText = `سوال ${quizState.currentIdx + 1} از ${quizState.questions.length}`;
+            document.getElementById('progress-bar').style.width = `${((quizState.currentIdx + 1) / quizState.questions.length) * 100}%`;
+            
+            const container = document.getElementById('options-container');
+            container.innerHTML = '';
+            document.getElementById('feedback-container').classList.add('hidden');
+            document.getElementById('check-btn').classList.remove('hidden');
+            document.getElementById('next-btn').classList.add('hidden');
+
+            if (quizState.currentMode === 'choice') {
+                q.opts.forEach((opt, idx) => {
+                    const btn = document.createElement('button');
+                    btn.className = "w-full p-4 border-2 border-slate-100 rounded-2xl text-right flex items-center gap-3 transition-all";
+                    btn.innerHTML = `<span class="w-6 h-6 rounded-lg bg-slate-100 flex items-center justify-center text-[10px] text-slate-500">${idx+1}</span> ${opt}`;
+                    btn.onclick = () => selectOption(btn, idx);
+                    container.appendChild(btn);
+                });
+            } else {
+                const area = document.createElement('textarea');
+                area.className = "w-full p-4 bg-slate-50 border-2 border-slate-100 rounded-2xl min-h-[140px] focus:border-blue-500 outline-none";
+                area.placeholder = "پاسخ خود را اینجا بنویسید...";
+                area.id = "desc-input";
+                container.appendChild(area);
+            }
+        }
+
+        let selectedIdx = null;
+        function selectOption(btn, idx) {
+            document.querySelectorAll('#options-container button').forEach(b => b.classList.replace('border-blue-500', 'border-slate-100'));
+            btn.classList.replace('border-slate-100', 'border-blue-500');
+            selectedIdx = idx;
+        }
+
+        function checkAnswer() {
+            const q = quizState.questions[quizState.currentIdx];
+            const feedback = document.getElementById('feedback-container');
+            const correctText = document.getElementById('correct-answer-text');
+            
+            feedback.classList.remove('hidden');
+            document.getElementById('check-btn').classList.add('hidden');
+            
+            if (quizState.currentMode === 'choice') {
+                if (selectedIdx === null) return alert('یک گزینه انتخاب کنید');
+                const isCorrect = selectedIdx === q.c;
+                if (isCorrect) quizState.score++;
+                correctText.innerText = q.opts[q.c];
+                document.getElementById('next-btn').classList.remove('hidden');
+            } else {
+                correctText.innerText = q.a;
+                document.getElementById('manual-grading').classList.remove('hidden');
+            }
+        }
+
+        function markCorrect(isValid) {
+            if (isValid) quizState.score++;
+            document.getElementById('manual-grading').classList.add('hidden');
+            handleNext();
+        }
+
+        function handleNext() {
+            if (quizState.currentIdx < quizState.questions.length - 1) {
+                quizState.currentIdx++;
+                selectedIdx = null;
+                renderQuestion();
+            } else {
+                showResults();
+            }
+        }
+
+        function showResults() {
+            const name = document.getElementById('user-name-input').value;
+            document.getElementById('res-user-name').innerText = name;
+            document.getElementById('res-score').innerText = quizState.score;
+            document.getElementById('res-total').innerText = quizState.questions.length;
+            
+            // Save to history
+            const record = { name, score: quizState.score, total: quizState.questions.length, date: new Date().toLocaleDateString('fa-IR') };
+            history.unshift(record);
+            localStorage.setItem('quiz_history', JSON.stringify(history.slice(0, 10)));
+            renderHistory();
+            
+            switchView('view-result');
+        }
+
+        function openStudyView() {
+            const container = document.getElementById('study-content');
+            container.innerHTML = appData.summary.map(item => `
+                <div class="p-4 bg-slate-50 rounded-2xl border-r-4 border-blue-500">
+                    <h3 class="font-bold text-slate-800 mb-1">${item.t}</h3>
+                    <p class="text-xs text-slate-600 leading-relaxed">${item.c}</p>
+                </div>
+            `).join('');
+            switchView('view-study');
+        }
+
+        function renderHistory() {
+            const list = document.getElementById('history-list');
+            list.innerHTML = history.length ? history.map(rec => `
+                <div class="p-4 bg-slate-50 rounded-2xl border border-slate-100 flex justify-between items-center">
+                    <div class="text-right">
+                        <div class="font-bold text-slate-800">${rec.name}</div>
+                        <div class="text-[10px] text-slate-400">${rec.date}</div>
+                    </div>
+                    <div class="text-xl font-black text-blue-600">${rec.score} <span class="text-[10px] text-slate-300 font-normal">از ${rec.total}</span></div>
+                </div>
+            `).join('') : '<p class="text-center text-slate-400 py-10">سابقه ای موجود نیست</p>';
+        }
+
+        function clearHistory() {
+            if (confirm('پاک شود؟')) {
+                history = [];
+                localStorage.removeItem('quiz_history');
+                renderHistory();
+            }
+        }
+
+        // Init
+        window.onload = () => {
+            fetchLessonData();
+            renderHistory();
+        };
+    </script>
+</body>
+</html>
+
