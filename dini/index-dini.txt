@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>سامانه آزمون پیام‌های آسمانی هفتم</title>
+    <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazir-font@v30.1.0/dist/font-face.css" rel="stylesheet" type="text/css" />
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <style>
+        :root {
+            --primary: #1e293b;
+            --secondary: #64748b;
+            --accent: #4f46e5;
+            --bg: #f1f5f9;
+            --card: #ffffff;
+            --border: #e2e8f0;
+            --text-main: #0f172a;
+        }
+
+        * {
+            box-sizing: border-box;
+            font-family: 'Vazir', sans-serif;
+            transition: all 0.3s ease;
+        }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text-main);
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        header {
+            width: 100%;
+            background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+            color: white;
+            padding: 40px 20px;
+            text-align: center;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+            margin-bottom: 40px;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 1.8rem;
+            font-weight: 900;
+        }
+
+        header p {
+            margin: 10px 0 0;
+            opacity: 0.9;
+            font-size: 1rem;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 900px;
+            padding: 0 20px 40px;
+        }
+
+        .search-box {
+            position: relative;
+            margin-bottom: 30px;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 15px 45px 15px 15px;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            font-size: 1rem;
+            outline: none;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+        }
+
+        .search-box i {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--secondary);
+            font-size: 1.2rem;
+        }
+
+        .lessons-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px;
+        }
+
+        .lesson-card {
+            background: var(--card);
+            border-radius: 16px;
+            padding: 20px;
+            border: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            text-decoration: none;
+            color: inherit;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.05);
+        }
+
+        .lesson-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1);
+            border-color: var(--accent);
+        }
+
+        .icon-wrapper {
+            width: 50px;
+            height: 50px;
+            background: #eef2ff;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--accent);
+            font-size: 1.5rem;
+            flex-shrink: 0;
+        }
+
+        .lesson-info h3 {
+            margin: 0;
+            font-size: 1.1rem;
+            color: var(--primary);
+        }
+
+        .lesson-info p {
+            margin: 5px 0 0;
+            font-size: 0.85rem;
+            color: var(--secondary);
+        }
+
+        .footer {
+            margin-top: auto;
+            padding: 20px;
+            text-align: center;
+            color: var(--secondary);
+            font-size: 0.8rem;
+        }
+
+        @media (max-width: 480px) {
+            header h1 { font-size: 1.5rem; }
+            .lessons-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>سامانه آزمون‌های پیام‌های آسمانی</h1>
+    <p>پایه هفتم دوره اول متوسطه</p>
+</header>
+
+<div class="container">
+    <div class="search-box">
+        <i class="ph ph-magnifying-glass"></i>
+        <input type="text" id="searchInput" placeholder="جستجوی شماره یا عنوان درس..." oninput="filterLessons()">
+    </div>
+
+    <div class="lessons-grid" id="lessonsGrid">
+        <!-- Lessons will be generated here -->
+    </div>
+</div>
+
+<div class="footer">
+    طراحی شده برای دانش‌آموزان کوشا
+</div>
+
+<script>
+    const lessons = [
+        { id: 1, title: "بینای توانا", icon: "ph-eye" },
+        { id: 2, title: "استعانت از خدا", icon: "ph-hands-praying" },
+        { id: 3, title: "تلخ یا شیرین", icon: "ph-info" },
+        { id: 4, title: "عبور آسان", icon: "ph-path" },
+        { id: 5, title: "پیامبر رحمت", icon: "ph-heart" },
+        { id: 6, title: "اسوه فداکاری و عدالت", icon: "ph-shield-check" },
+        { id: 7, title: "برترین بانو", icon: "ph-star" },
+        { id: 8, title: "افتخار بندگی", icon: "ph-medal" },
+        { id: 9, title: "به سوی پاکی", icon: "ph-drop" },
+        { id: 10, title: "ستون دین", icon: "ph-mosque" },
+        { id: 11, title: "نماز جماعت", icon: "ph-users-three" },
+        { id: 12, title: "نشان ارزشمندی", icon: "ph-crown" },
+        { id: 13, title: "بر بال فرشتگان", icon: "ph-bird" },
+        { id: 14, title: "کمال همنشین", icon: "ph-user-plus" },
+        { id: 15, title: "مزدوران شیطان", icon: "ph-warning-octagon" }
+    ];
+
+    const baseUrl = "https://rkarimabadi.github.io/shadi/dini/";
+
+    function renderLessons(data) {
+        const grid = document.getElementById('lessonsGrid');
+        grid.innerHTML = data.map(lesson => `
+            <a href="${baseUrl}lesson-${lesson.id}.html" class="lesson-card">
+                <div class="icon-wrapper">
+                    <i class="ph ${lesson.icon}"></i>
+                </div>
+                <div class="lesson-info">
+                    <h3>درس ${lesson.id}</h3>
+                    <p>${lesson.title}</p>
+                </div>
+                <i class="ph ph-caret-left" style="margin-right: auto; color: #cbd5e1;"></i>
+            </a>
+        `).join('');
+    }
+
+    function filterLessons() {
+        const term = document.getElementById('searchInput').value.toLowerCase();
+        const filtered = lessons.filter(l => 
+            l.title.toLowerCase().includes(term) || 
+            l.id.toString().includes(term)
+        );
+        renderLessons(filtered);
+    }
+
+    // Initial render
+    window.onload = () => renderLessons(lessons);
+</script>
+
+</body>
+</html>
+
