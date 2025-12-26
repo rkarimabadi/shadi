@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>آزمون جامع درس ۵ پیام‌های آسمانی هفتم</title>
+    <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazir-font@v30.1.0/dist/font-face.css" rel="stylesheet" type="text/css" />
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <style>
+        :root {
+            --primary: #0f172a;
+            --secondary: #475569;
+            --accent: #0891b2;
+            --bg: #f8fafc;
+            --card: #ffffff;
+            --success: #059669;
+            --error: #dc2626;
+            --warning: #d97706;
+            --border: #e2e8f0;
+        }
+
+        * { box-sizing: border-box; font-family: 'Vazir', sans-serif; }
+
+        body {
+            background-color: var(--bg);
+            color: var(--primary);
+            margin: 0;
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .container { width: 100%; max-width: 850px; }
+
+        .card {
+            background: var(--card);
+            border-radius: 24px;
+            padding: 25px;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05);
+            border: 1px solid var(--border);
+            margin-bottom: 20px;
+            animation: fadeIn 0.4s ease-out;
+        }
+
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        header { text-align: center; margin-bottom: 30px; border-bottom: 2px solid var(--border); padding-bottom: 15px; }
+        header h1 { font-size: 1.6rem; margin: 0; color: var(--accent); }
+        header p { color: var(--secondary); margin-top: 8px; font-weight: bold; }
+
+        .btn { border: none; padding: 12px 24px; border-radius: 14px; cursor: pointer; font-weight: bold; display: inline-flex; align-items: center; gap: 8px; transition: all 0.2s; font-size: 1rem; }
+        .btn-primary { background: var(--accent); color: white; }
+        .btn-outline { background: white; border: 2px solid var(--border); color: var(--secondary); }
+        .btn:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(8, 145, 178, 0.2); }
+
+        .mode-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin: 25px 0; }
+        .mode-card {
+            border: 2px solid var(--border);
+            padding: 20px;
+            border-radius: 20px;
+            cursor: pointer;
+            text-align: center;
+            transition: 0.3s;
+        }
+        .mode-card:hover { border-color: var(--accent); background: #f0f9ff; }
+        .mode-card.active { border-color: var(--accent); background: #ecfeff; box-shadow: 0 0 0 2px var(--accent); }
+        .mode-card i { font-size: 2.5rem; color: var(--accent); margin-bottom: 10px; }
+
+        .option-item {
+            border: 2px solid var(--border);
+            border-radius: 14px;
+            padding: 15px;
+            margin-bottom: 10px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            transition: 0.2s;
+        }
+        .option-item:hover:not(.revealed) { border-color: var(--accent); background: #f8fafc; }
+        .option-item.selected { border-color: var(--accent); background: #ecfeff; }
+        .option-item.correct { border-color: var(--success); background: #ecfdf5; color: var(--success); font-weight: bold; }
+        .option-item.wrong { border-color: var(--error); background: #fef2f2; color: var(--error); }
+
+        textarea { width: 100%; border: 2px solid var(--border); border-radius: 14px; padding: 15px; min-height: 120px; margin-bottom: 10px; font-size: 1rem; outline: none; }
+        textarea:focus { border-color: var(--accent); }
+
+        .feedback-box { background: #fffbeb; border-right: 5px solid var(--warning); padding: 15px; border-radius: 14px; margin-top: 15px; display: none; }
+        .feedback-box.visible { display: block; }
+
+        .history-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 10px; margin-top: 20px; }
+        .history-card { background: #f1f5f9; padding: 15px; border-radius: 16px; display: flex; justify-content: space-between; align-items: center; border: 1px solid var(--border); }
+        
+        .study-section { line-height: 1.8; color: #334155; }
+        .study-point { background: #f8fafc; border-right: 4px solid var(--accent); padding: 12px; margin-bottom: 10px; border-radius: 8px; font-size: 0.95rem; }
+        .study-point strong { color: var(--accent); }
+
+        .hidden { display: none; }
+        .navigation { display: flex; justify-content: space-between; margin-top: 20px; gap: 10px; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>پیام‌های آسمانی هفتم</h1>
+        <p>درس ۵: پیامبر رحمت (الگوی کامل زندگی)</p>
+    </header>
+
+    <!-- Menu Screen -->
+    <div id="menu-screen" class="card">
+        <h2>منوی اصلی سامانه</h2>
+        <div style="display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 30px;">
+            <button class="btn btn-outline" style="border-color:var(--accent); color:var(--accent)" onclick="showSection('study')"><i class="ph ph-book-open"></i> مطالعه درسنامه جامع درس ۵</button>
+            <button class="btn btn-primary" onclick="showSection('mode-selection')"><i class="ph ph-pencil-line"></i> شروع آزمون ۳۱ سوالی</button>
+        </div>
+
+        <div id="history-section" class="hidden">
+            <h3 style="font-size: 1.1rem; border-bottom: 2px solid var(--bg); padding-bottom: 10px;"><i class="ph ph-clock-counter-clockwise"></i> سوابق آزمون‌های درس ۵</h3>
+            <div id="history-list" class="history-grid"></div>
+        </div>
+    </div>
+
+    <!-- Study Screen -->
+    <div id="study-screen" class="card hidden">
+        <h2><i class="ph ph-book-open"></i> خلاصه آموزشی درس ۵: پیامبر رحمت</h2>
+        <div class="study-section">
+            <div class="study-point"><strong>الگوی کامل (اسوه حسنه):</strong> طبق آیه ۲۱ سوره احزاب، پیامبر اکرم (ص) «اسوه حسنه» یا همان سرمشق نیکو برای ماست. پیامبران چون خود هدایت یافته بودند، بهترین سبک زندگی را دارند.</div>
+            <div class="study-point"><strong>رحمت برای جهانیان:</strong> خداوند در قرآن می‌فرماید: «و ما ارسلناک الا رحمة للعالمین». پیامبر نه فقط برای مسلمانان، بلکه برای تمام جهانیان مایه رحمت و مهربانی است.</div>
+            <div class="study-point"><strong>اخلاق عظیم:</strong> ویژگی بارز پیامبر اخلاق بسیار نیکو و عظیم اوست (خلق عظیم). ایشان با رفتار و گفتار خود مردم را به راه راست هدایت می‌کردند.</div>
+            <div class="study-point"><strong>امانت‌داری بی‌نظیر:</strong> پیامبر حتی با غیرمسلمانان نیز در امانت‌داری صادق بود. ایشان فرمودند کسی که خیانت در امانت کند، بر دین او نمرده و خدا بر او خشمگین است.</div>
+            <div class="study-point"><strong>بزرگترین نعمت:</strong> فرستادن پیامبران بزرگترین نعمت الهی است و شکرانه این نعمت، پیروی کامل از راهنمایی‌ها و دستورات آنان است.</div>
+            <div class="study-point"><strong>مسیر زندگی:</strong> پیامبران با آوردن دین آسمانی، مسیر صحیح زندگی را که مورد تایید خداوند است به انسان‌ها نشان می‌دهند.</div>
+        </div>
+        <button class="btn btn-primary" style="margin-top:20px" onclick="showSection('menu')">بازگشت به منوی اصلی</button>
+    </div>
+
+    <!-- Mode Selection Screen -->
+    <div id="mode-selection-screen" class="card hidden">
+        <h2>تنظیمات آزمون درس ۵</h2>
+        <p>این آزمون شامل تمامی ۳۱ سوال استخراج شده از متن کتاب است:</p>
+        <div class="mode-grid">
+            <div class="mode-card" id="mode-choice" onclick="selectMode('choice')">
+                <i class="ph ph-list-numbers"></i>
+                <h3>تستی</h3>
+                <p>گزینه‌ای</p>
+            </div>
+            <div class="mode-card" id="mode-desc" onclick="selectMode('desc')">
+                <i class="ph ph-note-pencil"></i>
+                <h3>تشریحی</h3>
+                <p>نوشتاری</p>
+            </div>
+            <div class="mode-card" id="mode-mixed" onclick="selectMode('mixed')">
+                <i class="ph ph-shuffle"></i>
+                <h3>ترکیبی</h3>
+                <p>هوشمند</p>
+            </div>
+        </div>
+        <div class="navigation">
+            <button class="btn btn-outline" onclick="showSection('menu')">انصراف</button>
+            <button class="btn btn-primary" id="start-btn" onclick="startQuiz()" disabled>تایید و شروع آزمون</button>
+        </div>
+    </div>
+
+    <!-- Quiz Screen -->
+    <div id="quiz-screen" class="hidden">
+        <div id="progress" style="margin-bottom: 10px; font-weight: bold; color: var(--accent);"></div>
+        <div class="card" id="question-card"></div>
+        <div class="navigation">
+            <button class="btn btn-outline" id="prev-btn" onclick="nav(-1)">سوال قبلی</button>
+            <button class="btn btn-primary" id="next-btn" onclick="nav(1)">سوال بعدی</button>
+        </div>
+    </div>
+
+    <!-- Result Screen -->
+    <div id="result-screen" class="card hidden" style="text-align: center;">
+        <i class="ph ph-seal-check" style="font-size: 4rem; color: var(--success);"></i>
+        <h2>نتیجه آزمون درس ۵</h2>
+        <div id="final-score" style="font-size: 3.5rem; font-weight: 900; color: var(--accent); margin: 15px 0;"></div>
+        <p id="result-text" style="margin-bottom: 25px;"></p>
+        <button class="btn btn-primary" onclick="showSection('menu')">بازگشت به پیشخوان</button>
+    </div>
+</div>
+
+<script>
+    // بانک اطلاعاتی ۳۱ سوالی درس ۵ (پیامبر رحمت)
+    const questionBank = [
+        { q: "در آیه ۲۱ سوره احزاب «لَقَد کانَ لَکُم فی رسول الله أُسوَهٌ حَسَنَهٌ» منظور از اسوه حسنه کیست؟", a: "پیامبر اکرم (ص)", opts: ["حضرت علی (ع)", "پیامبر اکرم (ص)", "حضرت فاطمه (س)", "امام حسین (ع)"], c: 1 },
+        { q: "پیامبران چگونه انسان‌هایی هستند؟ ویژگی‌های آنان را بیان کنید.", a: "آنها هدایت یافته بودند و تنها کسانی هستند که می‌توانند با آوردن دین آسمانی، مسیر صحیح زندگی را به ما نشان دهند.", opts: ["ثروتمند و قدرتمند", "هدایت یافته و آورندگان دین آسمانی", "فقط شجاع", "عالم به علوم دنیوی"], c: 1 },
+        { q: "چرا زندگی پیامبران می‌تواند به صورت کامل الگوی زندگی ما قرار گیرد؟", a: "چون آنها هدایت یافته بودند و بهترین سبک زندگی را انتخاب می‌کردند.", opts: ["چون ثروتمند بودند", "چون هدایت یافته بودند و بهترین سبک زندگی را انتخاب کردند", "چون جنگجو بودند", "چون خانواده بزرگی داشتند"], c: 1 },
+        { q: "پیامبران از چه طریق ما را به راه راست راهنمایی می‌کنند؟", a: "از طریق گفتار و رفتار خود.", opts: ["فقط با معجزه", "از طریق گفتار و رفتار", "فقط با کتاب آسمانی", "با زور و اجبار"], c: 1 },
+        { q: "بزرگ‌ترین نعمت الهی کدام است و چگونه باید سپاسگزار آن گردید؟", a: "فرستادن پیامبران برای ما – با پیروی از راهنمایی‌های آنان.", opts: ["ثروت دنیوی", "فرستادن پیامبران و پیروی از آنها", "سلامتی جسمی", "خانواده خوب"], c: 1 },
+        { q: "معنای آیه «وَما أَرسَلْناک إِلّا رَحمَهً لِلْعالَمینَ» چیست؟", a: "ما تو را جز رحمت برای جهانیان نفرستادیم.", opts: ["ما تو را برای جنگ فرستادیم", "ما تو را جز رحمت برای جهانیان نفرستادیم", "ما تو را برای ثروت فرستادیم", "ما تو را برای عذاب فرستادیم"], c: 1 },
+        { q: "خداوند پیامبر اکرم (ص) را چگونه توصیف کرده است؟", a: "رحمت برای جهانیان.", opts: ["عذاب برای کافران", "رحمت برای جهانیان", "فقط برای مسلمانان", "جنگجو"], c: 1 },
+        { q: "معنای آیه «إِنَّک لَعَلی خُلُقٍ عَظیمٍ» چیست؟", a: "به راستی که تو دارای اخلاقی بسیار نیکو هستی.", opts: ["تو شجاع هستی", "به راستی که تو دارای اخلاقی بسیار نیکو هستی", "تو ثروتمند هستی", "تو قدرتمند هستی"], c: 1 },
+        { q: "چرا تأکید پیامبر بر بازگرداندن امانت حتی به غیرمسلمانان بود؟", a: "چون خیانت در امانت گناه بزرگ است و باعث ایمان آوردن غیرمسلمانان می‌شد.", opts: ["برای کسب ثروت", "چون خیانت گناه بزرگ است و باعث ایمان غیرمسلمانان می‌شد", "برای نمایش قدرت", "برای ترساندن دشمنان"], c: 1 },
+        { q: "پیامبر (ص) درباره خیانت در امانت چه فرمود؟", a: "کسی که خیانت کند و بمیرد، بر دین من نمرده و خدا از او خشمگین است.", opts: ["خیانت خوب است", "کسی که خیانت کند بر دین من نمرده و خدا خشمگین است", "خیانت فقط به مسلمانان بد است", "خیانت مهم نیست"], c: 1 },
+        { q: "اسوه حسنه در قرآن برای چه کسی آمده است؟", a: "پیامبر اکرم (ص)", opts: ["حضرت موسی", "پیامبر اکرم (ص)", "حضرت ابراهیم", "حضرت عیسی"], c: 1 },
+        { q: "چرا پیامبران بهترین الگو هستند؟", a: "چون هدایت یافته خدا بودند و بهترین زندگی را داشتند.", opts: ["چون معجزه داشتند", "چون هدایت یافته و بهترین سبک زندگی را انتخاب کردند", "چون پادشاه بودند", "چون جنگیدند"], c: 1 },
+        { q: "پیامبر اکرم (ص) را خداوند چه نامیده است؟", a: "رحمه للعالمین (رحمت برای جهانیان)", opts: ["غضب برای کافران", "رحمه للعالمین", "فقط برای عرب", "عذاب الهی"], c: 1 },
+        { q: "اخلاق پیامبر (ص) چگونه بود؟", a: "بسیار نیکو و عظیم.", opts: ["خشن", "بسیار نیکو و عظیم", "بی‌تفاوت", "خودخواه"], c: 1 },
+        { q: "بزرگ‌ترین نعمت خدا چیست؟", a: "فرستادن پیامبران.", opts: ["مال و ثروت", "فرستادن پیامبران", "قدرت", "زیبایی"], c: 1 },
+        { q: "چگونه از نعمت پیامبران شکرگزاری کنیم؟", a: "با پیروی از راهنمایی‌های آنان.", opts: ["با ثروت دادن", "با پیروی از راهنمایی‌های آنان", "با جنگیدن", "با دوری از آنها"], c: 1 },
+        { q: "پیامبران مسیر صحیح زندگی را چگونه نشان می‌دهند؟", a: "با آوردن دین آسمانی.", opts: ["با پول", "با آوردن دین آسمانی", "با قدرت نظامی", "با خانواده"], c: 1 },
+        { q: "چرا فقط پیامبران می‌توانند الگوی کامل باشند؟", a: "چون خود هدایت یافته بودند.", opts: ["چون مشهور بودند", "چون خود هدایت یافته بودند", "چون کتاب نوشتند", "چون سفر کردند"], c: 1 },
+        { q: "آیه اسوه حسنه در کدام سوره است؟", a: "سوره احزاب.", opts: ["سوره بقره", "سوره احزاب", "سوره توبه", "سوره فتح"], c: 1 },
+        { q: "پیامبر (ص) امانت را به چه کسانی بازمی‌گرداند؟", a: "حتی به غیرمسلمانان.", opts: ["فقط مسلمانان", "حتی به غیرمسلمانان", "به دشمنان نه", "به دوستان"], c: 1 },
+        { q: "علت ایمان آوردن برخی غیرمسلمانان به اسلام چه بود؟", a: "بازگرداندن امانت توسط پیامبر.", opts: ["معجزات", "بازگرداندن امانت", "جنگ‌ها", "سخنرانی‌ها"], c: 1 },
+        { q: "پیامبر (ص) دارای چه خلقی بود؟", a: "خلق عظیم.", opts: ["خلق بد", "خلق عظیم", "خلق متوسط", "بدون خلق"], c: 1 },
+        { q: "رحمت بودن پیامبر برای کیست؟", a: "برای تمام جهانیان.", opts: ["فقط مسلمانان", "برای تمام جهانیان", "فقط عرب‌ها", "فقط مکه"], c: 1 },
+        { q: "چگونه پیامبر را سرمشق کامل زندگی قرار دهیم؟", a: "با عمل به دستورات و پیروی از راهنمایی‌های ایشان.", opts: ["با خواندن کتاب", "با عمل به دستورات ایشان", "با فکر کردن", "با دوری"], c: 1 },
+        { q: "گفتار و رفتار پیامبران چگونه است؟", a: "بهترین الگو.", opts: ["معمولی", "بهترین الگو", "بد", "متوسط"], c: 1 },
+        { q: "پیامبران چه چیزی آوردند؟", a: "دین آسمانی.", opts: ["ثروت", "دین آسمانی", "سلاح", "غذا"], c: 1 },
+        { q: "خدا از پیامبر (ص) با چه تعبیری یاد کرده؟", a: "اسوه حسنه.", opts: ["دشمن", "اسوه حسنه", "پادشاه", "تاجر"], c: 1 },
+        { q: "امانت‌داری پیامبر چه تأثیری داشت؟", a: "ایمان آوردن غیرمسلمانان.", opts: ["جنگ", "ایمان آوردن غیرمسلمانان", "ترس", "دشمنی بیشتر"], c: 1 },
+        { q: "شکر نعمت پیامبران چگونه است؟", a: "پیروی از آنها.", opts: ["صرف خواندن", "پیروی از آنها", "نادیده گرفتن", "انکار"], c: 1 },
+        { q: "زندگی چه کسانی بهترین الگو است؟", a: "پیامبران الهی.", opts: ["پادشاهان", "پیامبران الهی", "تجار", "جنگجویان"], c: 1 },
+        { q: "آیه رحمه للعالمین درباره کیست؟", a: "پیامبر اکرم (ص).", opts: ["حضرت علی", "پیامبر اکرم (ص)", "حضرت موسی", "حضرت نوح"], c: 1 }
+    ];
+
+    let currentMode = '';
+    let questions = [];
+    let currentIdx = 0;
+    let states = [];
+
+    function showSection(id) {
+        document.querySelectorAll('.container > div').forEach(d => d.classList.add('hidden'));
+        document.getElementById(`${id}-screen`).classList.remove('hidden');
+        if (id === 'menu') renderHistory();
+        window.scrollTo(0, 0);
+    }
+
+    function selectMode(m) {
+        currentMode = m;
+        document.querySelectorAll('.mode-card').forEach(c => c.classList.remove('active'));
+        document.getElementById(`mode-${m}`).classList.add('active');
+        document.getElementById('start-btn').disabled = false;
+    }
+
+    function startQuiz() {
+        questions = questionBank.map(q => {
+            let type = currentMode;
+            if (currentMode === 'mixed') type = Math.random() > 0.5 ? 'choice' : 'desc';
+            return { ...q, type };
+        });
+        states = questions.map(() => ({ ans: null, text: '', revealed: false, isCorrect: null }));
+        currentIdx = 0;
+        showSection('quiz');
+        renderQuestion();
+    }
+
+    function renderQuestion() {
+        const q = questions[currentIdx];
+        const s = states[currentIdx];
+        const card = document.getElementById('question-card');
+        document.getElementById('progress').innerText = `سوال ${currentIdx + 1} از ${questions.length}`;
+
+        let html = `<p style="font-size:1.15rem; font-weight:bold; margin-bottom:20px; color:var(--primary); line-height:1.6;">${q.q}</p>`;
+
+        if (q.type === 'choice') {
+            q.opts.forEach((o, i) => {
+                let cls = 'option-item';
+                if (s.ans === i) cls += ' selected';
+                if (s.revealed) {
+                    if (i === q.c) cls += ' correct';
+                    else if (s.ans === i) cls += ' wrong';
+                }
+                html += `<div class="${cls}" onclick="handleChoice(${i})">${o}</div>`;
+            });
+            html += `<button class="btn btn-outline" style="margin-top:10px; width:100%" onclick="reveal()">بررسی پاسخ درست</button>`;
+        } else {
+            html += `<textarea id="q-text" placeholder="پاسخ تشریحی خود را اینجا بنویسید..." oninput="states[currentIdx].text=this.value">${s.text}</textarea>`;
+            html += `<button class="btn btn-outline" style="width:100%" onclick="reveal()">مشاهده متن کتاب و خودارزیابی</button>`;
+        }
+
+        html += `
+            <div class="feedback-box ${s.revealed ? 'visible' : ''}">
+                <p style="color:var(--secondary); font-size:0.9rem; margin-bottom:5px;">پاسخ مطابق متن کتاب:</p>
+                <p style="font-weight:bold; color:var(--primary);">${q.type === 'choice' ? q.opts[q.c] : q.a}</p>
+                ${q.type === 'desc' ? `
+                    <div style="display:flex; gap:10px; margin-top:10px">
+                        <button class="btn btn-outline" style="flex:1; border-color:var(--success); color:var(--success)" onclick="setEval(true)">صحیح نوشتم <i class="ph ph-check"></i></button>
+                        <button class="btn btn-outline" style="flex:1; border-color:var(--error); color:var(--error)" onclick="setEval(false)">اشتباه بود <i class="ph ph-x"></i></button>
+                    </div>
+                ` : ''}
+            </div>
+        `;
+        card.innerHTML = html;
+        updateNav();
+    }
+
+    function handleChoice(i) {
+        if (states[currentIdx].revealed) return;
+        states[currentIdx].ans = i;
+        states[currentIdx].isCorrect = (i === questions[currentIdx].c);
+        renderQuestion();
+    }
+
+    function reveal() {
+        states[currentIdx].revealed = true;
+        renderQuestion();
+    }
+
+    function setEval(v) {
+        states[currentIdx].isCorrect = v;
+        renderQuestion();
+    }
+
+    function nav(d) {
+        if (d === 1 && currentIdx === questions.length - 1) { finish(); return; }
+        currentIdx += d;
+        renderQuestion();
+    }
+
+    function updateNav() {
+        document.getElementById('prev-btn').disabled = currentIdx === 0;
+        document.getElementById('next-btn').innerHTML = currentIdx === questions.length - 1 ? 'پایان آزمون' : 'سوال بعدی <i class="ph ph-arrow-left"></i>';
+    }
+
+    function finish() {
+        showSection('result');
+        const score = states.filter(s => s.isCorrect === true).length;
+        document.getElementById('final-score').innerText = `${score} از ${questions.length}`;
+        
+        let msg = "";
+        const ratio = score / questions.length;
+        if (ratio >= 0.9) msg = "عالی! شما درس پیامبر رحمت را کاملاً یاد گرفته‌اید.";
+        else if (ratio >= 0.7) msg = "بسیار خوب. با یک بار مطالعه مجدد درسنامه می‌توانید ۱۰۰٪ شوید.";
+        else msg = "نیاز به تلاش بیشتری دارید. حتماً درسنامه را مجدداً مطالعه کنید.";
+        
+        document.getElementById('result-text').innerText = msg;
+        saveToStorage(score, questions.length);
+    }
+
+    function saveToStorage(s, t) {
+        const logs = JSON.parse(localStorage.getItem('payam_logs_lesson5') || '[]');
+        logs.push({ date: new Date().toLocaleDateString('fa-IR'), score: `${s}/${t}` });
+        localStorage.setItem('payam_logs_lesson5', JSON.stringify(logs.slice(-5)));
+    }
+
+    function renderHistory() {
+        const logs = JSON.parse(localStorage.getItem('payam_logs_lesson5') || '[]');
+        const section = document.getElementById('history-section');
+        const list = document.getElementById('history-list');
+        if (logs.length > 0) {
+            section.classList.remove('hidden');
+            list.innerHTML = logs.reverse().map(l => `
+                <div class="history-card">
+                    <div><div style="font-size:0.8rem; color:gray">${l.date}</div></div>
+                    <div style="font-weight:900; color:var(--accent)">${l.score}</div>
+                </div>
+            `).join('');
+        }
+    }
+
+    window.onload = renderHistory;
+</script>
+
+</body>
+</html>
+
